@@ -1,0 +1,65 @@
+﻿@{
+    ViewData["Title"] = "Statical";
+    Layout = "~/Views/Shared/_LayoutManagerment.cshtml";
+}
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com/modules/export-data.js"></script>
+
+    <div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+
+    <script>
+        $(document).ready(function() {
+            //-- lấy dữ liệu từ url
+            $.getJSON("/Statical/GetDatas", function(data) {
+                var Days = [];
+                var Profits = [];
+                var Revenues = [];
+                var Costs = [];
+                //var Quantities = [];
+                //-- gộp dữ liệu vào
+                for (var i = 0; i < data.length; i++) {
+                    Days.push(formatDate(data[i].day));
+                    Profits.push(data[i].tongThanhTien-data[i].tongChiPhi);
+                    Revenues.push(data[i].tongThanhTien);
+                    Costs.push(data[i].tongChiPhi);
+                    //Quantities.push(data[i].tongSoLuong);
+                }
+                //-- Đẩy dữ liệu vào biểu đồ
+                Highcharts.chart('container', {
+                    chart: { type: 'line' },
+                    title: { text: 'BIỂU ĐỒ THỐNG KÊ LỢI NHUẬN,DOANH THU,CHI PHÍ VÀ SỐ LƯỢNG SẢN PHẨM BÁN ĐƯỢC THEO NGÀY' },
+                    xAxis: { categories: Days },
+                    yAxis: { title: { text: 'Chỉ số' } },
+                    subtitle: { text: '(Đơn vị : VND)'},
+                    plotOptions: { line: { dataLabels: { enabled: true }, enableMouseTracking: false } },
+                    series: [{
+                        name: 'Lợi nhuận',
+                        data: Profits
+                    },{
+                        name: 'Doanh thu',
+                        data: Revenues
+                    },{
+                        name: 'Chi phí',
+                        data: Costs
+                    }]
+                });
+            });
+        });
+
+        //Định dạng lại thời gian thành yyyy-MM-dd
+        function formatDate(date) {
+            var d = new Date(date),
+                month = '' + (d.getMonth() + 1),
+                day = '' + d.getDate(),
+                year = d.getFullYear();
+
+            if (month.length < 2)
+                month = '0' + month;
+            if (day.length < 2)
+                day = '0' + day;
+
+            return [year, month, day].join('-');
+        }
+    </script>
+

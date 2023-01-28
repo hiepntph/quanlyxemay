@@ -1,0 +1,244 @@
+﻿@model Motorcycle_Shop_Project.Models.EmployeeDTO
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@using Motorcycle_Shop_Project.Models
+@using Graduation_API.Services.ClassServices;
+@{
+    ViewBag.Title = "Employee";
+    Layout = "~/Views/Shared/_LayoutManagerment.cshtml";
+}
+<style>
+    label{
+        color:black;
+    }
+    h1{
+        color:black;
+        font-weight:500;
+    }
+</style>
+<h1>QUẢN LÍ NHÂN VIÊN</h1>
+@if (ViewBag.Message != null)
+{
+    <div class="alert alert-success" role="alert">
+        <h3>@ViewBag.Message</h3>
+    </div>
+}
+<form asp-action="EmployeeCUPage" class="form">
+    <input asp-for="Id" style="width:0px;height:0px;visibility: hidden;"/>
+    <div class="row mt-5">
+        <div class="col-md-4">
+            <label class="col-md-7"><strong>Mã Nhân Viên:</strong></label>
+            <div class="form-input">
+                <span class="icon"><i class="fa fa-id-card"></i></span>
+                <input asp-for="Employee_Id" placeholder="Mã Nhân Viên / Employee Id" required/>
+                <span asp-validation-for="Employee_Id" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <label class="col-md-7"><strong>Tên Nhân Viên:</strong></label>
+            <div class="form-input">
+                <span class="icon"><i class="fa-solid fa-signature"></i></span>
+                <input asp-for="Employee_Name" placeholder="Tên Nhân Viên / Employee Name" required/>
+                <span asp-validation-for="Employee_Name" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <label class="col-md-7"><strong>Email:</strong></label>
+            <div class="form-input">
+                <span class="icon"><i class="fa-solid fa-lock"></i></span>
+                <input asp-for="Email" type="email" placeholder="Tài khoản / Email" required/>
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <label class="col-md-7"><strong>Mật Khẩu:</strong></label>
+            <div class="form-input">
+                <span class="icon"><i class="fa-solid fa-lock"></i></span>
+                <input asp-for="Password" type="password" placeholder="Mật khẩu / Password" />
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <label class="col-md-7"><strong>Họ:</strong></label>
+            <div class="form-input">
+                <span class="icon"><i class="fa-solid fa-signature"></i></span>
+                <input asp-for="First_name" placeholder="Họ / First Name" required/>
+                <span asp-validation-for="First_name" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <label class="col-md-7"><strong>Tên đệm:</strong></label>
+            <div class="form-input">
+                <span class="icon"><i class="fa-solid fa-signature"></i></span>
+                <input asp-for="Middle_name" placeholder="Tên đệm / Middle Name" required/>
+                <span asp-validation-for="Middle_name" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <label class="col-md-7"><strong>Tên:</strong></label>
+            <div class="form-input">
+                <span class="icon"><i class="fa-solid fa-signature"></i></span>
+                <input asp-for="Last_name" placeholder="Tên / Last Name" required/>
+                <span asp-validation-for="Last_name" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <label class="col-md-7"><strong>Ngày Sinh:</strong></label>
+            <div class="form-input">
+                <span class="icon"><i class="fa-solid fa-calendar-days"></i></span>
+                <input asp-for="Date_Of_Birth" type="datetime-local"/>
+                <span asp-validation-for="Date_Of_Birth" class="text-danger"></span>
+            </div>
+        </div>
+         <div class="col-md-4">
+            <label class="col-md-7"><strong>Ngày Gia nhập:</strong></label>
+            <div class="form-input">
+                <span class="icon"><i class="fa-solid fa-calendar-days"></i></span>
+                <input asp-for="Date_Of_Join" type="datetime-local"/>
+                <span asp-validation-for="Date_Of_Join" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <label class="col-md-7"><strong>Số Điện Thoại:</strong></label>
+            <div class="form-input">
+                <span class="icon"><i class="fa fa-phone" aria-hidden="true"></i></span>
+                <input asp-for="Phone_number" placeholder="Số điện thoại / Phone number (+84)" required/>
+                <span asp-validation-for="Phone_number" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <label class="col-md-5"><strong>Địa Chỉ:</strong></label>
+            <div class="form-input">
+                <span class="icon"><i class="fa-solid fa-map-location-dot"></i></span>
+                <input asp-for="Address" placeholder="Địa Chỉ / Address" required/>
+                <span asp-validation-for="Address" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <label class="col-md-7"><strong>Thành Phố:</strong></label>
+            <div class="form-input">
+                <span class="icon"><i class="fa-solid fa-city"></i></span>
+                <input asp-for="City" placeholder="Thành phố / City" required/>
+                <span asp-validation-for="City" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <label class="col-md-7"><strong>Quốc Gia:</strong></label>
+            <div class="form-input">
+                <span class="icon"><i class="fa-solid fa-earth-americas"></i></span>
+                <input asp-for="Country" placeholder="Quốc Gia / Country" required/>
+                <span asp-validation-for="Country" class="text-danger"></span>
+            </div>
+        </div>
+        <br />
+        <div class="form-group col-md-6">
+            <label class="col-md-5">Giới Tính:</label>
+            <select asp-for="Sex" asp-items="@ViewBag.Sex" class="form-select col-md-5">
+            </select>
+            <span asp-validation-for="Sex" class="text-danger"></span>
+        </div>
+        <div class="form-group col-md-6">
+            <label class="col-md-4">Chức Vụ:</label>
+            <select asp-for="Position_Id" asp-items="@ViewBag.Id_Job" class="form-select col-md-5">
+            </select>
+            <span asp-validation-for="Position_Id" class="text-danger"></span>
+        </div>
+        <div class="form-group col-md-6">
+            <label class="col-md-4">Cửa Hàng:</label>
+            <select asp-for="Store_Id" asp-items="@ViewBag.Id_Store" class="form-select col-md-5">
+            </select>
+            <span asp-validation-for="Store_Id" class="text-danger"></span>
+        </div>
+        <div class="form-group col-md-6">
+            <label class="col-md-5">Trạng Thái:</label>
+            <select asp-for="Status" asp-items="@ViewBag.Status" class="form-select col-md-5">
+            </select>
+            <span asp-validation-for="Status" class="text-danger"></span>
+        </div>
+        <div class="col-md-4">
+            <input type="submit" value="Lưu" class="btn btn-success" />
+        </div>
+        
+    </div>
+</form>
+<table class="table table-striped table-bordered justify-content-center">
+    <thead>
+        <tr><th colspan="13" class="text-center" style="background-color:red; color:white;">DANH SÁCH NHÂN VIÊN</th></tr>
+        <tr style="background-color:red; color:white;">
+            <th>Mã Nhân Viên</th>
+            <th>Tên Nhân Viên</th>
+            <th>Email</th>
+            <th>Tên đệm</th>
+            <th>Họ</th>
+            <th>Giới tính</th>
+            <th>Ngày Sinh</th>
+            <th>Địa chỉ</th>
+            <th>Số điện thoại</th>
+            <th>Cửa Hàng</th>
+            <th>Chức Vụ</th>
+            <th>Trạng thái</th>
+            <th>Chi tiết</th>
+        </tr>
+    </thead>
+    <tbody style="background-color:white;">
+        
+        @foreach (var item in Model.EmployeeList) 
+        {
+            //-- Lấy tên cửa hàng để hiển thị
+            StoreService storeService = new StoreService();
+            string store_name = storeService.GetAll().Where(c=>c.Id == item.Store_Id).Select(c => c.Store_Name).FirstOrDefault();
+            
+            //-- Lấy tên chức vụ để hiển thị
+            PositionService positionService = new PositionService();
+            string position_name = positionService.GetAll().Where(c=>c.Id == item.Position_Id).Select(c => c.Position_Name).FirstOrDefault();
+            //--Kiểm tra giới tính
+            string sex = item.Sex == 0 ? "Nam" : "Nữ";
+
+            //-- Kiểm tra trạng thái
+            string status = item.Status == 0 ? "Đang làm việc" : "Đã nghỉ việc";
+            <tr>
+                    <td>
+                        @item.Employee_Id
+                    </td>
+                    <td>
+                        @item.Employee_Name
+                    </td>
+                    <td>
+                        @item.Email
+                    </td>
+                    <td>
+                        @item.Middle_name
+                    </td>
+                    <td>
+                        @item.First_name
+                    </td>
+                    <td> @sex </td>
+                    <td>
+                        @item.Date_Of_Birth
+                    </td>
+                    <td>
+                        @item.Address
+                    </td>
+                    <td>
+                        @item.Phone_number
+                    </td>
+                    <td> @store_name </td>
+                    <td> @position_name </td>
+                    <td>
+                        @status
+                    </td>
+                    <td>
+                        <button class="btn btn-info" onclick="location.href='@Url.Action("Detail", "Employee",new { id = item.Id})'" />
+                        <img src="/images/ask_question_16px.png" alt="LOGO">
+                    </td>
+                </tr>
+        }
+    </tbody>
+</table>
+<script>
+    var alert = document.querySelector('.alert')
+    if(alert != null){
+        setTimeout(function(){
+            alert.remove()
+        }, 3000)
+    }
+</script>

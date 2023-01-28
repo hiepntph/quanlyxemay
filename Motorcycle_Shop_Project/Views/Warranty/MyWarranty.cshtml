@@ -1,0 +1,38 @@
+﻿
+@{
+    ViewData["Title"] = "My Warranty";
+    Layout = "~/Views/Shared/_LayoutCustomer.cshtml";
+}
+<div id="motor-detail" class="container">
+        <div class="row d-none d-lg-block motor-breadscrumb">
+            <a class="breadscrumb-parent" href="/">Trang chủ</a>
+            <span class="breadscrumb-arrow">❯</span>
+            <a class="breadscrumb-parent" href="/xe-may/san-pham">Bảo hành</a>
+            <span class="breadscrumb-arrow">❯</span>
+            <a class="breadscrumb-parent" href="/xe-may/san-pham">Bảo hành của tôi</a>
+        </div>
+        <div class="row overview">
+
+        @foreach (var item in @ViewBag.Datas)
+        {
+            <div class="col-12 col-lg-7 overview-left">
+                        <div class="characteristics-image">
+                            <img style="width:650px;height:500px;" src="~/images/@item.Image" alt="">
+                        </div>
+                    </div>
+                    <div class="col-12 col-lg-5 overview-right">
+                    <h3 class="d-none d-lg-block" style="color:Black">@item.Product_Name</h3>
+                    <div class="overview-detail mb-3" style="min-height: 0">
+                        <div class="characteristics-desc">
+                            <h5><strong>Biển số xe:</strong> @item.Licient_Plate</h5>
+                            <h5><strong>Ngày bắt đầu:</strong> @item.Start_Date</h5>
+                            <h5><strong>Ngày kết thúc:</strong> @item.End_Date</h5>
+                            <h5><strong>Trạng thái:</strong> @(item.Status == 0 ?"Chưa bảo hành" : item.Status == 1 ? "Đang còn bảo hành" : "Đã hết bảo hành")</h5>
+                        </div>
+                    </div>
+                </div>
+        }
+
+        </div>
+    </div>
+

@@ -1,0 +1,74 @@
+﻿@model Motorcycle_Shop_Project.Models.UserInfoDTO
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Login</title>
+    <!-- Meta tag Keywords -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="keywords" content="Smart Login Form Responsive Widget,Login form widgets, Sign up Web forms , Login signup Responsive web form,Flat Pricing table,Flat Drop downs,Registration Forms,News letter Forms,Elements" />
+    <script type="application/x-javascript">
+         addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false);
+        function hideURLbar(){ window.scrollTo(0,1); } </script>
+    <!-- Meta tag Keywords -->
+    <!-- css files -->
+    <style>
+
+    </style>
+   <link rel="stylesheet" href="~/css/deSignLogin.css" media="all">
+    <!-- online-fonts -->
+    <link href="//fonts.googleapis.com/css?family=Roboto+Slab:100,300,400,700Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900iSlabo+27px&subset=cyrillic,cyrillic-ext,greek,greek-ext,latin-ext,vietnamese" rel="stylesheet">
+    <!--//online-fonts -->
+    </head>
+    <body style="background-image:url(/images/xe-may-honda-sh-mode-2020-thay-doi-de-huong-toi-tuong-lai-honda-sh-mode-125-moi-1024x502.jpg);">
+        <!--header-->
+        <div class="agileheader">
+            <img src="/images/RIZE MOTO (1).png"style="width:150px;height:150px;"/>
+        </div>
+        <!--//header-->
+        <!--main-->
+        <div class="main-w3l">
+            <div class="w3layouts-main">
+                <h2>Đăng nhập</h2>
+                @if (ViewBag.Error != null)
+                        {
+                            <div class="alert alert-danger" role="alert" style="backgroud-color:white; color:red;">
+                                <h3 >@ViewBag.Error</h3>
+                            </div>
+                        }
+                <form action="/login/login" method="post">
+			        <input asp-for="Email" type="email" name="Email" placeholder="email" required/>
+			        <input asp-for="password" name="Password" type="password" placeholder="password" id="eye" class="far fa-eye" required/>
+                    <div id="eye">
+                    <i class="far fa-eye"></i>
+                </div>
+			        <span><input type="checkbox" />Nhớ tài khoản</span>
+			        <h6><a href="/user/forgot-password-page">Quên mật khẩu?</a></h6>
+				    <div class="clear"></div>
+				    <input type="submit" value="login" name="login">
+                    
+		        </form>
+		        <p>Chưa có tài khoản?<a href="/user/register-customer-page">Đăng kí</a></p>
+            </div>
+        </div>
+        <!--//main-->
+        <!--footer-->
+        <div class="footer-w3l">
+            <p>Chúng tôi rất hân hạnh khi là Hệ thống cửa hàng bán xe và dịch vụ do Honda ủy thác</p>
+        </div>
+        <!--//footer-->
+
+    </body>
+</html>
+<script>
+    var alert = document.querySelector('.alert')
+    if(alert != null){
+        setTimeout(function(){
+            alert.remove()
+        }, 3000)
+    }
+</script>

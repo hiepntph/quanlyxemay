@@ -1,0 +1,54 @@
+﻿@{
+    var user = Motorcycle_Shop_Project.Helpers.Commons.GetObjectFromJson<EF_CODEFIRST_FLUENT_API.DomainClass.Customer>(Context.Session, "user_info");
+}
+@model Motorcycle_Shop_Project.Models.ProductViewModel
+@{
+    ViewData["Title"] = "ProductDetail";
+    Layout = "~/Views/Shared/_LayoutCustomer.cshtml";
+}
+
+@if(Model != null){
+    <div id="motor-detail" class="container">
+        <div class="row d-none d-lg-block motor-breadscrumb">
+            <a class="breadscrumb-parent" href="/">Trang chủ</a>
+            <span class="breadscrumb-arrow">❯</span>
+            <a class="breadscrumb-parent" href="/xe-may/san-pham">Xe máy</a>
+            <span class="breadscrumb-arrow">❯</span>
+            <a class="breadscrumb-parent" href="/xe-may/san-pham">Sản phẩm</a>
+            <span class="breadscrumb-arrow">❯</span>
+            <a class="breadscrumb-current">@Model.Product.Product_Name</a>
+        </div>
+        <div class="row overview">
+            <div class="col-12 col-lg-7 overview-left">
+                <div class="characteristics-image">
+                    <img style="width:650px;height:500px;" src="~/images/@Model.Product_Detail.Image" alt="">
+                </div>
+            </div>
+            <div class="col-12 col-lg-5 overview-right">
+                <h3 class="d-none d-lg-block" style="color:Black">@Model.Product.Product_Name</h3>
+                <h4 class="d-none d-lg-block" style="color:Red">Giá hiện tại: @string.Format("{0:0,0}", Model.Product_Detail.Price) VNĐ</h4>
+                <div class="overview-detail mb-3" style="min-height: 0">
+                    <div class="characteristics-desc">
+                        <h5><strong>Màu sắc:</strong> @Model.Color.Color_Name</h5>
+                        <h5><strong>Loại sản phẩm:</strong> @Model.Category.Category_Name</h5>
+                        <h5><strong>Ngày sản xuất:</strong> @Model.Product_Detail.Date_Of_Manufacture</h5>
+                        <h5><strong>Số lượng hiện còn:</strong> @Model.Product_Detail.Quantity_in_stock</h5>
+                        <h5><strong>Số tháng bảo hành:</strong> @Model.Product_Detail.Month_Warranty</h5>
+                        <h5><strong>Loại sản phẩm:</strong> @Model.Category.Category_Name</h5>
+                        <h5><strong>Mô tả chi tiết:</strong> @Model.Product_Detail.Description</h5>
+                    </div>
+                </div>
+                @if (ViewBag.IsExists == "Exist")
+                {
+                    <a class="btn btn-danger" href="/product/removecart/@user?.Id/@Model.Product_Detail.Id">Xóa khỏi giỏ hàng</a>
+                }else{
+                    @if (user != null)
+                    {
+                        <a class="btn btn-primary" href="/product/addcart/@user?.Id/@Model.Product_Detail.Id">Lưu sản phẩm</a>
+                    }
+                }
+            </div>
+        </div>
+    </div>
+}
+

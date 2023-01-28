@@ -1,0 +1,1243 @@
+﻿@using Microsoft.AspNetCore.Mvc;
+@using Motorcycle_Shop_Project.Models
+@using Graduation_API.Services.ClassServices;
+@{
+    var user = Motorcycle_Shop_Project.Helpers.Commons.GetObjectFromJson<EF_CODEFIRST_FLUENT_API.DomainClass.Employee>(Context.Session, "user_info");
+    var svices = new PositionService();
+    var exsist = svices.GetAll().Where(c => c.Id == user.Position_Id).FirstOrDefault();
+    int position = 0;
+    if (exsist.Position_Name == "Qu?n lí")
+    {
+        position = 1;
+    }
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Motorcycle_Shop_Project</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/Motorcycle_Shop_Project.styles.css" asp-append-version="true" />
+
+	<!-- Google Tag Manager -->
+	<script>
+		(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-K9TS39L');
+	</script>
+	<!-- End Google Tag Manager -->
+
+
+	<!-- Google Tag Manager -->
+	<script>
+		(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-W5SSLWP');
+	</script>
+	<!-- End Google Tag Manager all-->
+
+	<!-- Google Tag Manager -->
+	<script>
+		(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-MDJHJL7');
+	</script>
+	<!-- End Google Tag Manager -->
+
+	<!-- Google Tag Manager -->
+	<script>
+		(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-KZDW8DN');
+	</script>
+	<!-- End Google Tag Manager -->
+	<title>Honda | Xe máy | Danh sách sản phẩm</title>
+	<meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="Honda Home page" />
+    <meta name="keywords" content="honda, xe may, xe máy, oto, ô tô" />
+    <meta name="csrf-token" content="2qsuJcsnvDgnRtsOmsuTzOLHRskqRlW6g1Eifk6Z">
+    <link rel="stylesheet" type="text/css" href="https://www.honda.com.vn/css/font-awesome.min.css" />
+    <link rel="stylesheet" type="text/css" href="https://www.honda.com.vn/css/common.css?v=1.0" />
+    <link rel="stylesheet" type="text/css" href=https://www.honda.com.vn/css/xe-may/san-pham.css>
+    <link rel="stylesheet" type="text/css" href="https://www.honda.com.vn/css/xe-may/chi-tiet.css?v=1.0">
+    <link rel="stylesheet" type="text/css" href="https://www.honda.com.vn/css/slick-theme.min.css">
+    <link rel="stylesheet" type="text/css" href="https://www.honda.com.vn/css/slick.min.css">
+    <link rel="stylesheet" href="~/css/designTextBox.css" />
+    <link href="~/css/Sidebar_icons_animated.css" rel="stylesheet" />
+    <link href="~/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/css/style.css" rel="stylesheet" />
+    <link href="~/css/custom.css" rel="stylesheet" />
+    <link href="~/css/responsive.css" rel="stylesheet" />
+    <link href="~/css/versions.css" rel="stylesheet" />
+    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+    <script src="~/js/all.js"></script>
+    <script src="~/js/custom.js"></script>
+    <script src="~/js/mapsed.js"></script>
+    <script src="~/bundles/jquery"></script>
+    <script src="~/js/01-custom-places-example.js"></script>
+    <script src="~/js/modernizer.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyCKjLTXdq6Db3Xit_pW_GK4EXuPRtnod4o"></script>
+</head>
+<body>
+    <header>
+		<div>
+			<ul>
+				<li>
+					<a href="javascript:void(0)">Thăm dò ý kiến Khách hàng</a>
+					<ul>
+						<li><a href="#">Ô tô</a></li>
+					</ul>
+				</li>
+				<li>|</li>
+				<li>
+					<a href="#">Câu hỏi thường gặp</a>
+				</li>
+				<li>|</li>
+				<li>
+					<a href="#">Liên hệ</a>
+				</li>
+				<li>|</li>
+				<li>
+					<a href="#">Tuyển dụng</a>
+					<ul>
+						<li><a href="#">Môi trường làm việc</a></li>
+						<li><a href="#">Tin
+								tức sự kiện</a></li>
+						<li><a href="#">Cơ hội việc làm</a></li>
+						<li><a href="#">Quy trình ứng tuyển</a>
+						</li>
+						<li><a href="#">Câu hỏi thường
+								gặp</a></li>
+					</ul>
+				</li>
+				<li>|</li>
+				<li><a href="/moi-thau">Mời thầu</a></li>
+				<li>
+					<div class="social-pc">
+						<div class="b-social" id="btn-social-pc">
+							<div class="btn-social">
+								<img src="https://www.honda.com.vn/images/social/ico-facebook-red.png">
+								<img src="https://www.honda.com.vn/images/social/ico-ig-red.png">
+								<img src="https://www.honda.com.vn/images/social/ico-youtube-red.png">
+                        </div>
+								<div class="social">
+									<div class="wrap-social" id="social1">
+										<div class="btn-accord">Honda Việt Nam
+											<i class="ico-arrow"><img src="https://www.honda.com.vn/images/social/ico-arrow.png"></i>
+										</div>
+										<div class="accord-content">
+											<a href="https://www.facebook.com/HondaVietnam" target="_blank">
+												<img src="https://www.honda.com.vn/images/social/ico-facebook.png">
+                                    </a>
+												<a href="https://www.instagram.com/hondavietnam_official/"
+													target="_blank">
+													<img src="https://www.honda.com.vn/images/social/ico-ig.png">
+                                    </a>
+													<a href="https://www.youtube.com/c/HondaVi%E1%BB%87tNamOfficial"
+														target="_blank">
+														<img src="https://www.honda.com.vn/images/social/ico-youtube.png">
+                                    </a>
+										</div>
+									</div>
+
+									<div class="wrap-social" id="social2">
+										<div class="btn-accord">Global Motorcycle Racing
+											<i class="ico-arrow"><img src="https://www.honda.com.vn/images/social/ico-arrow.png"></i>
+										</div>
+										<div class="accord-content">
+											<a href="https://www.facebook.com/hondaracingcorporation" target="_blank">
+												<img src="https://www.honda.com.vn/images/social/ico-facebook.png">
+                                    </a>
+												<a href="https://www.instagram.com/hondaracingcorporation"
+													target="_blank">
+													<img src="https://www.honda.com.vn/images/social/ico-ig.png">
+                                    </a>
+													<a href="https://www.youtube.com/user/HondaRacingHRC"
+														target="_blank">
+														<img src="https://www.honda.com.vn/images/social/ico-youtube.png">
+                                    </a>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+				</li>
+			</ul>
+			<div>
+				<button>
+                <i class="fa fa-bars"></i>
+            </button>
+				<a href="/">
+					<img src="https://www.honda.com.vn/images/logo.svg" alt="HONDA Việt Nam">
+            </a>
+			</div>
+		</div>
+		<nav>
+			<div class="social-mobile">
+				<div class="b-social" id="btn-social-pc">
+					<div class="btn-social">
+						<img src="https://www.honda.com.vn/images/social/ico-facebook-red.png">
+						<img src="https://www.honda.com.vn/images/social/ico-ig-red.png">
+						<img src="https://www.honda.com.vn/images/social/ico-youtube-red.png">
+                </div>
+						<div class="social">
+							<div id="social1">
+								<div class="btn-accord">Honda Việt Nam
+									<i class="ico-arrow"><img src="https://www.honda.com.vn/images/social/ico-arrow.png"></i>
+								</div>
+								<div class="accord-content">
+									<a href="https://www.facebook.com/HondaVietnam" target="_blank">
+										<img src="https://www.honda.com.vn/images/social/ico-facebook.png">
+                            </a>
+										<a href="https://www.instagram.com/hondavietnam_official/" target="_blank">
+											<img src="https://www.honda.com.vn/images/social/ico-ig.png">
+                            </a>
+											<a href="https://www.youtube.com/c/HondaVi%E1%BB%87tNamOfficial"
+												target="_blank">
+												<img src="https://www.honda.com.vn/images/social/ico-youtube.png">
+                            </a>
+								</div>
+							</div>
+
+							<div id="social2">
+								<div class="btn-accord">Global Motorcycle Racing
+									<i class="ico-arrow"><img src="https://www.honda.com.vn/images/social/ico-arrow.png"></i>
+								</div>
+								<div class="accord-content">
+									<a href="https://www.facebook.com/hondaracingcorporation" target="_blank">
+										<img src="https://www.honda.com.vn/images/social/ico-facebook.png">
+                            </a>
+										<a href="https://www.instagram.com/hondaracingcorporation" target="_blank">
+											<img src="https://www.honda.com.vn/images/social/ico-ig.png">
+                            </a>
+											<a href="https://www.youtube.com/user/HondaRacingHRC" target="_blank">
+												<img src="https://www.honda.com.vn/images/social/ico-youtube.png">
+                            </a>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				
+            </div>
+            <ul>
+                @if (position == 1)
+                {
+                    <li class="arrow">
+                        <a href="#" style="color:white;">Thống kê</a>
+                        <ul>
+                            <li>
+                                <a href="/statical/staticalpage">Thống kê chung</a>
+                            </li>
+                            <li>
+                                <a href="/statical/rank_employee">Xếp hạng doanh số nhân viên</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="arrow">
+                        <a href="#" style="color:white;">Thống kê</a>
+                        <ul>
+                            <li>
+                                <a href="/statical/staticalpage">Thống kê chung</a>
+                            </li>
+                            <li>
+                                <a href="/statical/rank_employee">Xếp hạng doanh số nhân viên</a>
+                            </li>
+                        </ul>
+                    </li>
+                }
+                @if (position == 0)
+                {
+                    <li class="arrow">
+                        <a href="#" style="color:white;">Thống kê</a>
+                        <ul>
+                            <li>
+                                <a href="/statical/Statical_Employee">Doanh số của bạn</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="arrow">
+                        <a href="#" style="color:white;">Thống kê</a>
+                        <ul>
+                            <li>
+                                <a href="/statical/Statical_Employee">Doanh số của bạn</a>
+                            </li>
+                        </ul>
+                    </li>
+                }
+                
+                <li class="arrow ">
+                    <a href="#" style="color:white;">Hóa đơn</a>
+                    <ul>
+                        <li>
+                            <a href="/invoice/load-product">Tạo Hóa đơn</a>
+                        </li>
+                        <li>
+                            <a href="/invoice/get-all-invoice">Tất cả Hóa đơn</a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="arrow">
+                    <a href="#" style="color:white;">Sản phẩm</a>
+                    <ul>
+                        <li>
+                            <a href="/productmgr/getallproduct">Sản phẩm</a>
+                        </li>
+                        <li>
+                            <a href="/category/categorypage">Loại sản phẩm</a>
+                        </li>
+                        <li>
+                            <a href="/producer/producerpage">Nhà sản xuất</a>
+                        </li>
+                        <li>
+                            <a href="/color/colorpage">Màu sắc</a>
+                        </li>
+                        <li>
+                            <a href="/product_detail/product_detailpage">Chi tiết sản phẩm</a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="arrow ">
+                    <a href="/customer/customerpage" style="color:white;">Khách hàng</a>
+                </li>
+                @if (position == 1)
+                {
+                    <li class="arrow ">
+                        <a href="#" style="color:white;">Cửa hàng</a>
+                        <ul>
+                            <li>
+                                <a href="/store/storepage">Cửa hàng</a>
+                            </li>
+                            <li>
+                                <a href="/position/positionpage">Chức vụ</a>
+                            </li>
+                            <li>
+                                <a href="/employee/employeepage">Nhân viên</a>
+                            </li>
+                        </ul>
+                    </li>
+                }
+
+                <li class="arrow ">
+                    <a href="#" style="color:white;">Bảo hành</a>
+                    <ul>
+                        <li>
+                            <a href="/warranty/load-product">Bảo hành</a>
+                        </li>
+                        <li>
+                            <a href="/warranty/GetAllWarranty">Danh sách bảo hành</a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="arrow ">
+                    <a href="#" style="color:white;">Sự kiện</a>
+                    <ul>
+                        <li>
+                            <a href="/event/ShowAllEventActive">Đang diễn ra</a>
+                        </li>
+                        <li>
+                            <a href="/event/ShowAllEvent">Tất cả sự kiện</a>
+                        </li>
+                        <li>
+                            <a href="/event/EventPage">Thêm mới sự kiện</a>
+                        </li>
+                    </ul>
+                </li>
+                
+                <li class="arrow ">
+                    <a href="#" style="color:white;"><img src="~/images/info.png" />@(user == null ? "Thông tin" : user.Employee_Id)</a>
+                    <ul id="nav-customer">
+                        @if (user == null)
+                        {
+                            <li>
+                                <a href="/login/index">Đăng nhập</a>
+                            </li>
+                            <li>
+                                <a href="/user/change-password">Đổi mật khẩu</a>
+                            </li>
+                        }
+                        @if (user != null)
+                        {
+                            <li>
+                                <a href="/user/change-password">Đổi mật khẩu</a>
+                            </li>
+                            <li>
+                                <a href="/user/change-personal-infomation-employee-page">Đổi thông tin cá nhân</a>
+                            </li>
+                            <li>
+                                <a href="/Login/logout">Đăng xuất</a>
+                            </li>
+                        }
+                    </ul>
+                </li>
+
+                <li class="arrow ">
+                    <a href="#">Tài khoản</a>
+                    <ul>
+                        <li>
+                            <a href="#">Đăng nhập</a>
+                        </li>
+                        <li>
+                            <a href="#">Đăng kí</a>
+                        </li>
+                        <li>
+                            <a href="#">Đổi thông tin cá nhân</a>
+                        </li>
+                        <li>
+                            <a href="#">Quên mật khẩu</a>
+                        </li>
+                        <li>
+                            <a href="#">Đăng xuất</a>
+                        </li>
+                    </ul>
+                </li>
+
+				</ul>
+		</nav>
+	</header>
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+	<footer id="footer">
+        <div class="col-md-12">
+            <div class="site-map clearfix">
+                <div class="center-content site-map-pc clearfix">
+                    <div class="block">
+                        <div class="mobile">
+                            <div class="button not-border">
+                                XE
+                                MÁY
+                            </div>
+                            <div class="panel">
+                                <ul class="list1">
+                                    <li class="normal">
+                                        <a href="https://www.honda.com.vn/xe-may/san-pham">
+                                            Sản
+                                            phẩm
+                                        </a>
+                                    </li>
+                                    <li class="normal">
+                                        <a href="https://www.honda.com.vn/xe-may/phu-tung">
+                                            Phụ
+                                            tùng
+                                        </a>
+                                    </li>
+                                    <li class="normal">
+                                        <a href="https://www.honda.com.vn/xe-may/phu-kien">
+                                            Phụ
+                                            kiện
+                                        </a>
+                                    </li>
+                                    <li class="normal">
+                                        <a href="https://www.honda.com.vn/xe-may/dich-vu-sau-ban-hang/chinh-sach-bao-hanh-xe-tren-350cc">
+                                            Dịch
+                                            vụ
+                                            sau
+                                            bán
+                                            hàng
+                                        </a>
+                                    </li>
+                                    <li class="normal">
+                                        <a href="https://www.honda.com.vn/xe-may/danh-sach-cua-hang">
+                                            Cửa
+                                            hàng
+                                            Honda
+                                            Uỷ
+                                            nhiệm
+                                        </a>
+                                    </li>
+                                    <li class="normal">
+                                        <a href="https://www.honda.com.vn/xe-may/ban-hang-doanh-nghiep/gioi-thieu-chung">
+                                            Bán
+                                            hàng
+                                            Doanh
+                                            nghiệp
+                                        </a>
+                                    </li>
+                                    <li class="normal">
+                                        <a href="https://www.honda.com.vn/xe-may/emc">
+                                            Cuộc
+                                            thi
+                                            Lái
+                                            xe
+                                            Sinh
+                                            thái
+                                        </a>
+                                    </li>
+                                    <li class="normal">
+                                        <a href="https://www.honda.com.vn/tin-tuc/xe-may">
+                                            Tin
+                                            tức
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="mobile">
+                            <div class="button">
+                                Ô
+                                TÔ
+                            </div>
+                            <div class="panel">
+                                <ul class="list1">
+                                    <li class="normal">
+                                        <a href="https://www.honda.com.vn/o-to/feel-the-performance">
+                                            Chiến
+                                            dịch
+                                            "Feel
+                                            The
+                                            Performance"
+                                        </a>
+                                    </li>
+                                    <li class="normal">
+                                        <a href="https://www.honda.com.vn/o-to/san-pham">
+                                            Sản
+                                            phẩm
+                                        </a>
+                                    </li>
+                                    <li class="normal">
+                                        <a href="https://www.honda.com.vn/o-to/phu-tung">
+                                            Phụ
+                                            tùng
+                                        </a>
+                                    </li>
+                                    <li class="normal">
+                                        <a href="https://www.honda.com.vn/o-to/phu-kien/danh-sach-phu-kien">
+                                            Phụ
+                                            kiện
+                                        </a>
+                                    </li>
+                                    <li class="normal">
+                                        <a href="https://www.honda.com.vn/o-to/dich-vu-sau-ban-hang/chinh-sach-bao-hanh">
+                                            Dịch
+                                            vụ
+                                            sau
+                                            bán
+                                            hàng
+                                        </a>
+                                    </li>
+                                    <li class="normal">
+                                        <a href="https://www.honda.com.vn/o-to/dai-ly/danh-sach-dai-ly">
+                                            Đại
+                                            lý
+                                        </a>
+                                    </li>
+                                    <li class="normal">
+                                        <a href="https://www.honda.com.vn/o-to/ban-hang-doanh-nghiep/gioi-thieu-chung">
+                                            Bán
+                                            hàng
+                                            Doanh
+                                            nghiệp
+                                        </a>
+                                    </li>
+                                    <li class="normal">
+                                        <a href="https://www.honda.com.vn/tin-tuc/o-to">
+                                            Tin
+                                            tức
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="mobile">
+                            <div class="button">
+                                ĐÓNG
+                                GÓP
+                                XÃ
+                                HỘI
+                            </div>
+                            <div class="panel">
+                                <ul class="list1">
+                                    <li class="normal">
+                                        <a href="https://www.honda.com.vn/thong-tin-moi-truong/nha-may-vinh-phuc">
+                                            Thông
+                                            tin
+                                            môi
+                                            trường
+                                        </a>
+                                    </li>
+                                    <li class="normal">
+                                        <a href="https://www.honda.com.vn/dong-gop-xa-hoi#ho-tro-moi-truong">
+                                            Hỗ
+                                            trợ
+                                            môi
+                                            trường
+                                        </a>
+                                    </li>
+                                    <li class="normal">
+                                        <a href="https://www.honda.com.vn/dong-gop-xa-hoi#ho-tro-giao-duc">
+                                            Hỗ
+                                            trợ
+                                            giáo
+                                            dục
+                                        </a>
+                                    </li>
+                                    <li class="normal">
+                                        <a href="https://www.honda.com.vn/dong-gop-xa-hoi#ho-tro-cong-dong">
+                                            Hỗ
+                                            trợ
+                                            cộng
+                                            đồng
+                                        </a>
+                                    </li>
+                                    <li class="normal">
+                                        <a href="https://www.honda.com.vn/tin-tuc/dong-gop-xa-hoi">
+                                            Tin
+                                            tức
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="mobile">
+                            <div class="button">
+                                LÁI
+                                XE
+                                AN
+                                TOÀN
+                            </div>
+                            <div class="panel">
+                                <ul class="list1">
+                                    <li class="normal">
+                                        <a href="https://www.honda.com.vn/chuong-trinh-toi-yeu-viet-nam">
+                                            Chương
+                                            trình
+                                            Tôi
+                                            yêu
+                                            Việt
+                                            Nam
+                                        </a>
+                                    </li>
+                                    <li class="normal">
+                                        <a href="https://www.honda.com.vn/trung-tam-dao-tao-lai-xe">
+                                            Trung
+                                            tâm
+                                            đào
+                                            tạo
+                                            lái
+                                            xe
+                                            an
+                                            toàn
+                                        </a>
+                                    </li>
+                                    <li class="normal">
+                                        <a href="https://www.honda.com.vn/lai-xe-an-toan">
+                                            Hoạt
+                                            động
+                                            đào
+                                            tạo
+                                        </a>
+                                    </li>
+                                    <li class="normal">
+                                        <a href="https://www.honda.com.vn/tin-tuc/lai-xe-an-toan">
+                                            Tin
+                                            tức
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="mobile">
+                            <div class="link">
+                                <a href="/motor-sports">MOTORSPORTS</a>
+                            </div>
+                        </div>
+                        <div class="mobile">
+                            <div class="button">
+                                TIN
+                                TỨC
+                            </div>
+                            <div class="panel">
+                                <ul class="list1">
+                                    <li class="normal">
+                                        <a href="https://www.honda.com.vn/tin-tuc">
+                                            Tin
+                                            tức
+                                            chung
+                                        </a>
+                                    </li>
+                                    <li class="normal">
+                                        <a href="https://www.honda.com.vn/tin-tuc/xe-may">
+                                            Tin
+                                            tức
+                                            xe
+                                            máy
+                                        </a>
+                                    </li>
+                                    <li class="normal">
+                                        <a href="https://www.honda.com.vn/tin-tuc/o-to">
+                                            Tin
+                                            tức
+                                            ô
+                                            tô
+                                        </a>
+                                    </li>
+                                    <li class="normal">
+                                        <a href="https://www.honda.com.vn/tin-tuc/doanh-so-ban-hang">
+                                            Doanh
+                                            số
+                                            bán
+                                            hàng
+                                        </a>
+                                    </li>
+                                    <li class="normal">
+                                        <a href="https://www.honda.com.vn/tin-tuc/khuyen-mai">
+                                            Khuyến
+                                            mãi
+                                        </a>
+                                    </li>
+                                    <li class="normal">
+                                        <a href="https://www.honda.com.vn/tin-tuc/dong-gop-xa-hoi">
+                                            Đóng
+                                            góp
+                                            Xã
+                                            hội
+                                        </a>
+                                    </li>
+                                    <li class="normal">
+                                        <a href="https://www.honda.com.vn/tin-tuc/lai-xe-an-toan">
+                                            Lái
+                                            xe
+                                            an
+                                            toàn
+                                        </a>
+                                    </li>
+                                    <li class="normal">
+                                        <a href="https://www.honda.com.vn/motor-sports/news">MotorSports</a>
+                                    </li>
+                                    <li class="normal">
+                                        <a href="https://www.honda.com.vn/tin-tuc/tin-tuc-khac">
+                                            Các
+                                            tin
+                                            khác
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <ul class="pc list1">
+                            <li class="big">
+                                <a>
+                                    XE
+                                    MÁY
+                                </a>
+                            </li>
+                            <li class="normal">
+                                <a href="https://www.honda.com.vn/xe-may/san-pham">
+                                    Sản
+                                    phẩm
+                                </a>
+                            </li>
+                            <li class="normal">
+                                <a href="https://www.honda.com.vn/xe-may/phu-tung">
+                                    Phụ
+                                    tùng
+                                </a>
+                            </li>
+                            <li class="normal">
+                                <a href="https://www.honda.com.vn/xe-may/phu-kien">
+                                    Phụ
+                                    kiện
+                                </a>
+                            </li>
+                            <li class="normal">
+                                <a href="https://www.honda.com.vn/xe-may/dich-vu-sau-ban-hang/chinh-sach-bao-hanh-xe-tren-350cc">
+                                    Dịch
+                                    vụ
+                                    sau
+                                    bán
+                                    hàng
+                                </a>
+                            </li>
+                            <li class="normal">
+                                <a href="https://www.honda.com.vn/xe-may/danh-sach-cua-hang">
+                                    Cửa
+                                    hàng
+                                    Honda
+                                    Uỷ
+                                    nhiệm
+                                </a>
+                            </li>
+                            <li class="normal">
+                                <a href="https://www.honda.com.vn/xe-may/ban-hang-doanh-nghiep/gioi-thieu-chung">
+                                    Bán
+                                    hàng
+                                    Doanh
+                                    nghiệp
+                                </a>
+                            </li>
+                            <li class="normal">
+                                <a href="https://www.honda.com.vn/xe-may/emc">
+                                    Cuộc
+                                    thi
+                                    Lái
+                                    xe
+                                    Sinh
+                                    thái
+                                </a>
+                            </li>
+                            <li class="normal">
+                                <a href="https://www.honda.com.vn/tin-tuc/xe-may">
+                                    Tin
+                                    tức
+                                </a>
+                            </li>
+                        </ul>
+                        <ul class="pc list1">
+                            <li class="big">
+                                <a>
+                                    Ô
+                                    TÔ
+                                </a>
+                            </li>
+                            <li class="normal">
+                                <a href="https://www.honda.com.vn/o-to/feel-the-performance">
+                                    Chiến
+                                    dịch
+                                    "Feel
+                                    The
+                                    Performance"
+                                </a>
+                            </li>
+                            <li class="normal">
+                                <a href="https://www.honda.com.vn/o-to/san-pham">
+                                    Sản
+                                    phẩm
+                                </a>
+                            </li>
+                            <li class="normal">
+                                <a href="https://www.honda.com.vn/o-to/phu-tung">
+                                    Phụ
+                                    tùng
+                                </a>
+                            </li>
+                            <li class="normal">
+                                <a href="https://www.honda.com.vn/o-to/phu-kien/danh-sach-phu-kien">
+                                    Phụ
+                                    kiện
+                                </a>
+                            </li>
+                            <li class="normal">
+                                <a href="https://www.honda.com.vn/o-to/dich-vu-sau-ban-hang/chinh-sach-bao-hanh">
+                                    Dịch
+                                    vụ
+                                    sau
+                                    bán
+                                    hàng
+                                </a>
+                            </li>
+                            <li class="normal">
+                                <a href="https://www.honda.com.vn/o-to/dai-ly/danh-sach-dai-ly">
+                                    Đại
+                                    lý
+                                </a>
+                            </li>
+                            <li class="normal">
+                                <a href="https://www.honda.com.vn/o-to/ban-hang-doanh-nghiep/gioi-thieu-chung">
+                                    Bán
+                                    hàng
+                                    Doanh
+                                    nghiệp
+                                </a>
+                            </li>
+                            <li class="normal">
+                                <a href="https://www.honda.com.vn/tin-tuc/o-to">
+                                    Tin
+                                    tức
+                                </a>
+                            </li>
+                        </ul>
+                        <ul id="dong-gop-xa-hoi"
+                            class="pc list1">
+                            <li class="big">
+                                <a href="https://www.honda.com.vn/dong-gop-xa-hoi">
+                                    ĐÓNG
+                                    GÓP
+                                    XÃ
+                                    HỘI
+                                </a>
+                            </li>
+                            <li class="normal">
+                                <a href="https://www.honda.com.vn/thong-tin-moi-truong/nha-may-vinh-phuc">
+                                    Thông
+                                    tin
+                                    môi
+                                    trường
+                                </a>
+                            </li>
+                            <li class="normal">
+                                <a href="https://www.honda.com.vn/dong-gop-xa-hoi#ho-tro-moi-truong">
+                                    Hỗ
+                                    trợ
+                                    môi
+                                    trường
+                                </a>
+                            </li>
+                            <li class="normal">
+                                <a href="https://www.honda.com.vn/dong-gop-xa-hoi#ho-tro-giao-duc">
+                                    Hỗ
+                                    trợ
+                                    giáo
+                                    dục
+                                </a>
+                            </li>
+                            <li class="normal">
+                                <a href="https://www.honda.com.vn/dong-gop-xa-hoi#ho-tro-cong-dong">
+                                    Hỗ
+                                    trợ
+                                    cộng
+                                    đồng
+                                </a>
+                            </li>
+                            <li class="normal">
+                                <a href="https://www.honda.com.vn/tin-tuc/dong-gop-xa-hoi">
+                                    Tin
+                                    tức
+                                </a>
+                            </li>
+                        </ul>
+                        <ul class="pc list1">
+                            <li class="big">
+                                <a>
+                                    LÁI
+                                    XE
+                                    AN
+                                    TOÀN
+                                </a>
+                            </li>
+                            <li class="normal">
+                                <a href="https://www.honda.com.vn/chuong-trinh-toi-yeu-viet-nam">
+                                    Chương
+                                    trình
+                                    Tôi
+                                    yêu
+                                    Việt
+                                    Nam
+                                </a>
+                            </li>
+                            <li class="normal">
+                                <a href="https://www.honda.com.vn/trung-tam-dao-tao-lai-xe">
+                                    Trung
+                                    tâm
+                                    đào
+                                    tạo
+                                    lái
+                                    xe
+                                    an
+                                    toàn
+                                </a>
+                            </li>
+                            <li class="normal">
+                                <a href="https://www.honda.com.vn/lai-xe-an-toan">
+                                    Hoạt
+                                    động
+                                    đào
+                                    tạo
+                                </a>
+                            </li>
+                            <li class="normal">
+                                <a href="https://www.honda.com.vn/tin-tuc/lai-xe-an-toan">
+                                    Tin
+                                    tức
+                                </a>
+                            </li>
+                        </ul>
+                        <ul class="pc list1">
+                            <li class="big">
+                                <a href="/motor-sports">MOTORSPORTS</a>
+                            </li>
+                        </ul>
+                        <ul class="pc list1">
+                            <li class="big">
+                                <a>
+                                    TIN
+                                    TỨC
+                                </a>
+                            </li>
+                            <li class="normal">
+                                <a href="https://www.honda.com.vn/tin-tuc">
+                                    Tin
+                                    tức
+                                    chung
+                                </a>
+                            </li>
+                            <li class="normal">
+                                <a href="https://www.honda.com.vn/tin-tuc/xe-may">
+                                    Tin
+                                    tức
+                                    xe
+                                    máy
+                                </a>
+                            </li>
+                            <li class="normal">
+                                <a href="https://www.honda.com.vn/tin-tuc/o-to">
+                                    Tin
+                                    tức
+                                    ô
+                                    tô
+                                </a>
+                            </li>
+                            <li class="normal">
+                                <a href="https://www.honda.com.vn/tin-tuc/doanh-so-ban-hang">
+                                    Doanh
+                                    số
+                                    bán
+                                    hàng
+                                </a>
+                            </li>
+                            <li class="normal">
+                                <a href="https://www.honda.com.vn/tin-tuc/khuyen-mai">
+                                    Khuyến
+                                    mãi
+                                </a>
+                            </li>
+                            <li class="normal">
+                                <a href="https://www.honda.com.vn/tin-tuc/dong-gop-xa-hoi">
+                                    Đóng
+                                    góp
+                                    Xã
+                                    hội
+                                </a>
+                            </li>
+                            <li class="normal">
+                                <a href="https://www.honda.com.vn/tin-tuc/lai-xe-an-toan">
+                                    Lái
+                                    xe
+                                    an
+                                    toàn
+                                </a>
+                            </li>
+                            <li class="normal">
+                                <a href="https://www.honda.com.vn/motor-sports/news">MotorSports</a>
+                            </li>
+                            <li class="normal">
+                                <a href="https://www.honda.com.vn/tin-tuc/tin-tuc-khac">
+                                    Các
+                                    tin
+                                    khác
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="block2">
+                        <ul class="list2">
+                            <li class="big">
+                                Công
+                                ty
+                                Honda
+                                Việt
+                                Nam
+                            </li>
+                            <li class="normal">
+                                Số
+                                GCNĐKDN:
+                                2500150543
+                            </li>
+                            <li class="normal">
+                                Đăng
+                                ký
+                                lần
+                                đầu:
+                                Ngày
+                                26/6/2008
+                            </li>
+                            <li class="normal">
+                                Đăng
+                                ký
+                                thay
+                                đổi
+                                lần
+                                thứ
+                                12:
+                                Ngày
+                                15/4/2022.
+                            </li>
+                            <li class="normal">
+                                Cơ
+                                quan
+                                cấp:
+                                Phòng
+                                Đăng
+                                ký
+                                kinh
+                                doanh
+                                –
+                                Sở
+                                Kế
+                                hoạch
+                                và
+                                Đầu
+                                tư
+                                Vĩnh
+                                Phúc
+                            </li>
+                            <li class="normal">
+                                Địa
+                                chỉ:
+                                Phường
+                                Phúc
+                                Thắng,
+                                Thành
+                                Phố
+                                Phúc
+                                Yên,
+                                <br class="mobile" />Tỉnh Vĩnh Phúc, Việt Nam
+                            </li>
+                            <li class="normal">
+                                <a href="http://online.gov.vn/Home/WebDetails/62061">
+                                    <img src="https://www.honda.com.vn/images/logoSaleNoti.png" style="width: 150px">
+                                </a>
+                            </li>
+                        </ul>
+                        <ul class="list2">
+                            <li class="big">
+                                ĐĂNG
+                                KÝ
+                                NHẬN
+                                TIN
+                            </li>
+                            <li class="normal form">
+                                <div>
+                                    <form name="news_subscription"
+                                          novalidate>
+                                        <input class="input_tin" type="text" name="name" placeholder="Họ tên..." autocomplete="off" required />
+                                        <input class="input_tin" type="email" name="email" placeholder="Email..." autocomplete="off" required />
+                                        <select name="type" required>
+                                            <option value="">Đăng ký nhận tin</option>
+                                            <option value="2">Tin tức xe máy</option>
+                                            <option value="3">Tin tức ô tô</option>
+                                            <option value="4">Doanh số bàn hàng</option>
+                                            <option value="5">Khuyến mãi</option>
+                                            <option value="6">Đóng góp xã hội</option>
+                                            <option value="7">Lái xe an toàn</option>
+                                            <option value="8">MotorSports</option>
+                                            <option value="9">Các tin khác</option>
+                                        </select>
+                                        <script src="https://www.google.com/recaptcha/api.js"
+                                                async
+                                                defer>
+                                        </script>
+                                        <div class="g-recaptcha"
+                                             data-sitekey="6LelYbgZAAAAAKh2AwzAFXVnLZpPnaccryzAjCyJ"
+                                             data-theme="light"
+                                             data-size="normal"
+                                             id="recaptcha-element">
+                                        </div>
+                                        <div class="message">
+                                        </div>
+                                        <button type="submit" class="btn subscription">Đăng Ký</button>
+
+                                    </form>
+                                </div>
+                            </li>
+                        </ul>
+                        <ul class="list3">
+                            <li class="big">
+                                ĐƯỜNG
+                                DÂY
+                                NÓNG
+                            </li>
+                            <li class="normal">
+                                Hotline:
+                                <b class="b-hotline">1800 8001</b>
+                                (Miễn
+                                phí
+                                cho
+                                tất
+                                cả
+                                thuê
+                                bao)
+                            </li>
+                            <li class="normal">
+                                Email:
+                                <a href="mailto:cr@honda.com.vn"
+                                   class="a-mailto">cr@honda.com.vn</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="block3 bottom">
+                        <div class="textcopy">
+                            ©
+                            2019.
+                            Copyright
+                            by
+                            Honda
+                            VietNam
+                        </div>
+                        <span class="textcopy">|</span>
+                        <span class="textcopy">
+                            <a style="color:#cc0000;" href="https://www.honda.com.vn/terms-and-conditions">Terms and Conditions</a>
+                        </span>
+                        <span class="textcopy">|</span>
+                        <span class="textcopy">
+                            <a style="color:#cc0000;" href="https://www.honda.com.vn/policy">Privacy Policy</a>
+                        </span>
+                        <span class="textcopy">|</span>
+                        <span class="textcopy">
+                            <a style="color:#cc0000;" href="https://www.honda.com.vn/policy#cookie-policy">Cookie Policy</a>
+                        </span>
+
+
+
+
+
+
+
+
+
+
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script type="text/javascript">
+            const listButon = document.getElementsByClassName("button");
+            for (let i = 0; i < listButon.length; i++) {
+                listButon[i].addEventListener("click", function () {
+                    var panel = this.nextElementSibling;
+                    if (panel.style.maxHeight) {
+                        panel.style.maxHeight = null;
+                        this.classList.remove("active");
+                    } else {
+                        panel.style.maxHeight = panel.scrollHeight + "px";
+                        this.classList.add("active");
+                    }
+                });
+            }
+        </script>
+        <style>
+            .social-link {
+                margin-right: 12px;
+            }
+
+                .social-link a {
+                    margin: 0 !important;
+                }
+
+            .g-recaptcha {
+                transform: scale(0.77);
+                -webkit-transform: scale(0.95);
+                transform-origin: 0 0;
+                -webkit-transform-origin: 0 0;
+            }
+        </style>
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

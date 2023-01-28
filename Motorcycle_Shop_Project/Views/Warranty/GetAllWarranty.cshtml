@@ -1,0 +1,82 @@
+﻿@model Motorcycle_Shop_Project.Models.WarrantyDTO
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@using Motorcycle_Shop_Project.Models
+@using Graduation_API.Services.ClassServices;
+@{
+    ViewBag.Title = "Get all warranty | warranty";
+    Layout = "~/Views/Shared/_LayoutManagerment.cshtml";
+}
+<style>
+    label{
+        color:black;
+    }
+    h1{
+        color:vlack;
+        font-weight:500;
+    }
+</style>
+<h1>BẢO HÀNH</h1>
+<div class="row">
+    <div class="col-md-9">
+        <form asp-action="Search_Warranty" class="form">
+            <div class="row mt-5">
+                <div class="col-md-5">
+                    <div class="form-input">
+                        <span class="icon"><i class="fa-solid fa-signature"></i></span>
+                        <input asp-for="Keyword" placeholder="Tìm kiếm / keyword" required/>
+                        <span asp-validation-for="Keyword" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-input">
+                        <input type="submit" value="Tìm kiếm" class="btn btn-success" />
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<table class="table table-striped table-bordered">
+    <thead>
+        <tr style="background-color:red; color:white;">
+            <th>Mã nhân viên</th>
+            <th>Tên nhân viên</th>
+            <th>Tên sản phẩm</th>
+            <th>Tên khách hàng</th>
+            <th>Email</th>
+            <th>Biển số xe</th>
+            <th>Mô tả</th>
+            <th>Trạng thái</th>
+        </tr>
+    </thead>
+    <tbody style="background-color:white;">
+        @foreach (var item in Model.WarrantyList) 
+        {
+            Product_DetailService productDeatail_Service = new Product_DetailService();
+            var productdt = productDeatail_Service.GetAll().Where(c=>c.Id == item.Product_Detail_Id).FirstOrDefault();
+
+            ProductService productService = new ProductService();
+            var product = productService.GetAll().Where(c=>c.Id == productdt.Product_Id).FirstOrDefault();
+
+            CustomerService customerService = new CustomerService();
+            var customer = customerService.GetAll().Where(c=>c.Id == item.Customer_Id).FirstOrDefault();
+
+            InvoiceService invoiceService = new InvoiceService();
+            var invoice = invoiceService.GetAll().Where(c=>c.Id == item.Id).FirstOrDefault();
+
+            EmployeeService employeeService = new EmployeeService();
+            var employee = employeeService.GetAll().Where(c=>c.Id == item.Employee_Id).FirstOrDefault();
+            <tr>
+                <td> @employee.Employee_Id </td>
+                <td> @employee.Employee_Name </td>
+                <td> @product.Product_Name </td>
+                <td> @customer.Customer_Name </td>
+                <td> @customer.Email </td>
+                <td> @item.License_Plate </td>
+                <td> @item.Description </td>
+                <td> @(item.Status == 0 ?"Chưa bảo hành" : item.Status == 1 ? "Đang còn bảo hành" : "Đã hết bảo hành")</td>
+            </tr>
+        }
+    </tbody>
+</table>

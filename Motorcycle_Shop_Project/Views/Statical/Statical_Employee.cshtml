@@ -1,0 +1,55 @@
+﻿@{
+    ViewData["Title"] = "Statical";
+    Layout = "~/Views/Shared/_LayoutManagerment.cshtml";
+}
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com/modules/export-data.js"></script>
+
+    <div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+
+    <script>
+        $(document).ready(function() {
+            //-- lấy dữ liệu từ url
+            $.getJSON("/Statical/GetSales", function(data) {
+                var Days = [];
+                var Total_number_Sales = [];
+                //var Quantities = [];
+                //-- gộp dữ liệu vào
+                for (var i = 0; i < data.length; i++) {
+                    Days.push(formatDate(data[i].day));
+                    Total_number_Sales.push(data[i].total_number_Sales);
+                    //Quantities.push(data[i].tongSoLuong);
+                }
+                //-- Đẩy dữ liệu vào biểu đồ
+                Highcharts.chart('container', {
+                    chart: { type: 'line' },
+                    title: { text: 'BIỂU ĐỒ SỐ LƯỢNG SẢN PHẨM BÁN ĐƯỢC CỦA BẠN THEO NGÀY' },
+                    xAxis: { categories: Days },
+                    yAxis: { title: { text: 'Chỉ số' } },
+                    subtitle: { text: '(Đơn vị : sản phẩm)'},
+                    plotOptions: { line: { dataLabels: { enabled: true }, enableMouseTracking: false } },
+                    series: [{
+                        name: 'Số lượng sản phẩm bán được',
+                        data: Total_number_Sales
+                    }]
+                });
+            });
+        });
+
+        //Định dạng lại thời gian thành yyyy-MM-dd
+        function formatDate(date) {
+            var d = new Date(date),
+                month = '' + (d.getMonth() + 1),
+                day = '' + d.getDate(),
+                year = d.getFullYear();
+
+            if (month.length < 2)
+                month = '0' + month;
+            if (day.length < 2)
+                day = '0' + day;
+
+            return [year, month, day].join('-');
+        }
+    </script>
+

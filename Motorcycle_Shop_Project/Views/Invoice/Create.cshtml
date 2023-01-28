@@ -1,0 +1,133 @@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    var user = Motorcycle_Shop_Project.Helpers.Commons.GetObjectFromJson<EF_CODEFIRST_FLUENT_API.DomainClass.Employee>(Context.Session, "user_info");
+}
+@model Motorcycle_Shop_Project.Models.InvoiceDTO
+
+@{
+    ViewData["Title"] = "Invoice page";
+    Layout = "~/Views/Shared/_LayoutManagerment.cshtml";
+}
+
+<div id="motor-detail" class="container">
+        <div class="row d-none d-lg-block motor-breadscrumb">
+            <a class="breadscrumb-parent" href="/">Hóa đơn</a>
+            <span class="breadscrumb-arrow">❯</span>
+            <a class="breadscrumb-parent" href="/xe-may/san-pham">Tạo hóa đơn</a>
+            <span class="breadscrumb-arrow">❯</span>
+            <a class="breadscrumb-parent" href="/xe-may/san-pham">Sản phẩm</a>
+            <span class="breadscrumb-arrow">❯</span>
+            <a class="breadscrumb-current">@ViewBag.Data.Product.Product_Name</a>
+        </div>
+        <div class="row overview">
+            <div class="col-12 col-lg-7 overview-left">
+                <div class="characteristics-image">
+                    <img style="width:650px;height:500px;" src="~/images/@ViewBag.Data.Product_Detail.Image" alt="">
+                </div>
+            </div>
+            <div class="col-12 col-lg-5 overview-right">
+                <h3 class="d-none d-lg-block" style="color:Black">@ViewBag.Data.Product.Product_Name</h3>
+                <h4 class="d-none d-lg-block" style="color:Red">Giá: @string.Format("{0:0,0}", ViewBag.Data.Product_Detail.Price) VNĐ</h4>
+                <h4 class="d-none d-lg-block" style="color:Red">Được giảm: @string.Format("{0:0,0}", ViewBag.Amount_reduced) VNĐ</h4>
+                <div class="overview-detail mb-3" style="min-height: 0">
+                    <div class="characteristics-desc">
+                        <h5><strong>Màu sắc:</strong> @ViewBag.Data.Color.Color_Name</h5>
+                        <h5><strong>Loại sản phẩm:</strong> @ViewBag.Data.Category.Category_Name</h5>
+                        <h5><strong>Ngày sản xuất:</strong> @ViewBag.Data.Product_Detail.Date_Of_Manufacture</h5>
+                        <h5><strong>Số lượng hiện còn:</strong> @ViewBag.Data.Product_Detail.Quantity_in_stock</h5>
+                        <h5><strong>Số tháng bảo hành:</strong> @ViewBag.Data.Product_Detail.Month_Warranty</h5>
+                        <h5><strong>Loại sản phẩm:</strong> @ViewBag.Data.Category.Category_Name</h5>
+                        <h5><strong>Mô tả chi tiết:</strong> @ViewBag.Data.Product_Detail.Description</h5>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+    @if (ViewBag.Message != null)
+    {
+        <div class="alert alert-danger" role="alert">
+            <h3>@ViewBag.Message</h3>
+        </div>
+    }
+    <form asp-action="create" class="form">
+    <input asp-for="Id" style="width:0px;height:0px;visibility: hidden;"/>
+    <div class="row mt-5">
+        <div class="col-md-4">
+            <label class="col-md-7"><strong>Tên Khách Hàng:</strong></label>
+            <div class="form-input">
+                <span class="icon"><i class="fa-solid fa-signature"></i></span>
+                <input asp-for="Customer_Name" placeholder="Tên Khách hàng / Customer Name" required/>
+                <span asp-validation-for="Customer_Name" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <label class="col-md-7"><strong>Email:</strong></label>
+            <div class="form-input">
+                <span class="icon"><i class="fa-solid fa-lock"></i></span>
+                <input asp-for="Email" type="email" placeholder="Tài khoản / Email" required/>
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <label class="col-md-7"><strong>Ngày Thanh toán:</strong></label>
+            <div class="form-input">
+                <span class="icon"><i class="fa-solid fa-calendar-days"></i></span>
+                <input asp-for="Date_of_Payment" type="datetime-local"/>
+                <span asp-validation-for="Date_of_Payment" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <label class="col-md-7"><strong>Số Điện Thoại:</strong></label>
+            <div class="form-input">
+                <span class="icon"><i class="fa fa-phone" aria-hidden="true"></i></span>
+                <input asp-for="Phone_Number" placeholder="Số điện thoại / Phone number (+84)" required/>
+                <span asp-validation-for="Phone_Number" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <label class="col-md-5"><strong>Địa Chỉ:</strong></label>
+            <div class="form-input">
+                <span class="icon"><i class="fa-solid fa-map-location-dot"></i></span>
+                <input asp-for="Address" placeholder="Địa Chỉ / Address" required/>
+                <span asp-validation-for="Address" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <label class="col-md-7"><strong>Tổng tiền:</strong></label>
+            <div class="form-input">
+                <span class="icon"><i class="fa-solid fa-city"></i></span>
+                <input asp-for="Total_Money" placeholder="Thành Tiền / Total Money"style=" color:red;" value="@ViewBag.ToTal_Money" readonly/>
+                <span asp-validation-for="Total_Money" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <label class="col-md-7"><strong>Số tiền đã thanh toán:</strong></label>
+            <div class="form-input">
+                <span class="icon"><i class="fa-solid fa-earth-americas"></i></span>
+                <input asp-for="Amound_Paid" placeholder="Số tiền đã thanh toán / Amound Paid" required/>
+                <span asp-validation-for="Amound_Paid" class="text-danger"></span>
+            </div>
+        </div>
+        <br />
+        <div class="form-group col-md-6">
+            <label class="col-md-5">Trạng Thái:</label>
+            <select asp-for="Status" asp-items="@ViewBag.Status" class="form-select col-md-5">
+            </select>
+            <span asp-validation-for="Status" class="text-danger"></span>
+        </div>
+        <div class="col-md-4">
+            <input type="submit" value="Lưu" class="btn btn-success" />
+        </div>
+        
+    </div>
+</form>
+<script>
+    var alert = document.querySelector('.alert')
+    if(alert != null){
+        setTimeout(function(){
+            alert.remove()
+        }, 3000)
+    }
+</script>
+

@@ -1,0 +1,64 @@
+﻿@model Motorcycle_Shop_Project.Models.EmployeeDTO
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@using Motorcycle_Shop_Project.Models
+@using Graduation_API.Services.ClassServices;
+@{
+    ViewBag.Title = "Rank Employee";
+    Layout = "~/Views/Shared/_LayoutManagerment.cshtml";
+}
+@{
+    // Since Product isn't a string, it requires a cast.
+    var data = ViewData["Data"] as List<EmployeeStaticalDTO>;
+}
+<style>
+    label{
+        color:black;
+    }
+    h1{
+        color:black;
+        font-weight:500;
+    }
+</style>
+<h1>XẾP HẠNG DOANH SỐ NHÂN VIÊN</h1>
+<table class="table table-striped table-bordered justify-content-center">
+    <thead>
+        <tr><th colspan="7" class="text-center" style="background-color:red; color:white;">DANH SÁCH NHÂN VIÊN</th></tr>
+        <tr style="background-color:red; color:white;">
+            <th>Mã Nhân Viên</th>
+            <th>Tên Nhân Viên</th>
+            <th>Số điện thoại</th>
+            <th>Giới tính</th>
+            <th>Số đơn hàng</th>
+            <th>Số sản phẩm bán được</th>
+            <th>Ngày</th>
+        </tr>
+    </thead>
+    <tbody style="background-color:white;">
+        @foreach (var item in data) 
+        {
+            <tr>
+                    <td>
+                        @item.Employee_id
+                    </td>
+                    <td>
+                        @item.Employee_name
+                    </td>
+                    <td>
+                        @item.Phone_number
+                    </td>
+                    <td>
+                        @(item.Sex == 0 ? "Nam" : "Nữ")
+                    </td>
+                    <td>
+                        @(item.Total_Quantity) Đơn hàng
+                    </td>
+                    <td>
+                        @(item.Total_Number_Sales) Sản phẩm
+                    </td>
+                    <td>
+                        @item.Date.ToString("dd/MM/yyyy");
+                    </td>
+                </tr>
+        }
+    </tbody>
+</table>

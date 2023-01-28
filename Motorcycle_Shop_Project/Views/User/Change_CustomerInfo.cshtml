@@ -1,0 +1,163 @@
+﻿@model Motorcycle_Shop_Project.Models.CustomerDTO
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@using Motorcycle_Shop_Project.Models
+@using Graduation_API.Services.ClassServices;
+@{
+    ViewBag.Title = "Change Customer personal infomation";
+    Layout = null;
+}
+<style>
+    label{
+        color:black;
+    }
+    h1{
+        color:black;
+        font-weight:500;
+    }
+</style>
+<link rel="stylesheet" type="text/css" href="https://www.honda.com.vn/css/font-awesome.min.css" />
+    <link rel="stylesheet" type="text/css" href="https://www.honda.com.vn/css/common.css?v=1.0" />
+    <link rel="stylesheet" type="text/css" href=https://www.honda.com.vn/css/xe-may/san-pham.css>
+    <link rel="stylesheet" type="text/css" href="https://www.honda.com.vn/css/xe-may/chi-tiet.css?v=1.0">
+    <link rel="stylesheet" type="text/css" href="https://www.honda.com.vn/css/slick-theme.min.css">
+    <link rel="stylesheet" type="text/css" href="https://www.honda.com.vn/css/slick.min.css">
+    <link rel="stylesheet" href="~/css/designTextBox.css" />
+    <link href="~/css/Sidebar_icons_animated.css" rel="stylesheet" />
+    <link href="~/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/css/style.css" rel="stylesheet" />
+    <link href="~/css/custom.css" rel="stylesheet" />
+    <link href="~/css/responsive.css" rel="stylesheet" />
+    <link href="~/css/versions.css" rel="stylesheet" />
+    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+    <script src="~/js/all.js"></script>
+    <script src="~/js/custom.js"></script>
+    <script src="~/js/mapsed.js"></script>
+    <script src="~/bundles/jquery"></script>
+    <script src="~/js/01-custom-places-example.js"></script>
+    <script src="~/js/modernizer.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyCKjLTXdq6Db3Xit_pW_GK4EXuPRtnod4o"></script>
+<h1>ĐỔI THÔNG TIN CÁ NHÂN</h1>
+@if (ViewBag.Message != null)
+{
+    <div class="alert alert-danger" role="alert">
+        <h3>@ViewBag.Message</h3>
+    </div>
+}
+<form asp-action="Change_CustomerInfo" class="form">
+    <input asp-for="Id" style="width:0px;height:0px;visibility: hidden;"/>
+    <div class="row mt-5">
+        
+        <div class="col-md-4">
+            <label class="col-md-7"><strong>Tên Khách Hàng:</strong></label>
+            <div class="form-input">
+                <span class="icon"><i class="fa-solid fa-signature"></i></span>
+                <input asp-for="Customer_Name" placeholder="Tên Khách Hàng / Customer Name" required/>
+                <span asp-validation-for="Customer_Name" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <label class="col-md-7"><strong>Email:</strong></label>
+            <div class="form-input">
+                <span class="icon"><i class="fa-solid fa-lock"></i></span>
+                <input asp-for="Email" type="email" placeholder="Tài khoản / Email" required/>
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <label class="col-md-7"><strong>Mật Khẩu:</strong></label>
+            <div class="form-input">
+                <span class="icon"><i class="fa-solid fa-lock"></i></span>
+                <input asp-for="Password" type="password" placeholder="Mật khẩu / Password" required/>
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <label class="col-md-7"><strong>Họ:</strong></label>
+            <div class="form-input">
+                <span class="icon"><i class="fa-solid fa-signature"></i></span>
+                <input asp-for="First_name" placeholder="Họ / First Name" required/>
+                <span asp-validation-for="First_name" class="text-danger"></span>
+            </div>
+        </div>
+         <div class="col-md-4">
+            <label class="col-md-7"><strong>Tên Đệm:</strong></label>
+            <div class="form-input">
+                <span class="icon"><i class="fa-solid fa-align-center"></i></span>
+                <input asp-for="Middle_name" placeholder="Tên đệm / Middle Name" required/>
+                <span asp-validation-for="Middle_name" class="text-danger"></span>
+            </div>
+        </div>
+         <div class="col-md-4">
+            <label class="col-md-7"><strong>Tên:</strong></label>
+            <div class="form-input">
+                <span class="icon"><i class="fa-solid fa-align-center"></i></span>
+                <input asp-for="Last_name" placeholder="Tên / Last Name" required/>
+                <span asp-validation-for="Last_name" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <label class="col-md-7"><strong>Ngày Sinh:</strong></label>
+            <div class="form-input">
+                <span class="icon"><i class="fa-solid fa-calendar-days"></i></span>
+                <input asp-for="Date_of_birth" type="datetime-local"/>
+                <span asp-validation-for="Date_of_birth" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <label class="col-md-7"><strong>Số Điện Thoại:</strong></label>
+            <div class="form-input">
+                <span class="icon"><i class="fa fa-phone" aria-hidden="true"></i></span>
+                <input asp-for="Phone_number" placeholder="Số điện thoại / Phone number (+84)" required/>
+                <span asp-validation-for="Phone_number" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <label class="col-md-5"><strong>Địa Chỉ:</strong></label>
+            <div class="form-input">
+                <span class="icon"><i class="fa-solid fa-map-location-dot"></i></span>
+                <input asp-for="Address" placeholder="Địa Chỉ / Address" required/>
+                <span asp-validation-for="Address" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <label class="col-md-7"><strong>Thành Phố:</strong></label>
+            <div class="form-input">
+                <span class="icon"><i class="fa-solid fa-city"></i></span>
+                <input asp-for="City" placeholder="Thành phố / City" required/>
+                <span asp-validation-for="City" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <label class="col-md-7"><strong>Quốc Gia:</strong></label>
+            <div class="form-input">
+                <span class="icon"><i class="fa-solid fa-earth-americas"></i></span>
+                <input asp-for="Country" placeholder="Quốc Gia / Country" required/>
+                <span asp-validation-for="Country" class="text-danger"></span>
+            </div>
+        </div>
+         <div class="col-md-4">
+            <label class="col-md-7"><strong>Mô tả:</strong></label>
+            <div class="form-input">
+                <span class="icon"><i class="fa-solid fa-align-center"></i></span>
+                <input asp-for="Description" placeholder="Mô tả / Description" />
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div style="height:42px;"></div>
+            <input type="submit" value="Lưu" class="btn btn-success" />
+        </div>
+        
+    </div>
+</form>
+<script>
+    var alert = document.querySelector('.alert')
+    if(alert != null){
+        setTimeout(function(){
+            alert.remove()
+        }, 3000)
+    }
+</script>

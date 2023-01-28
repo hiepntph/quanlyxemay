@@ -1,0 +1,99 @@
+﻿@model Motorcycle_Shop_Project.Models.CategoryDTO
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@using Motorcycle_Shop_Project.Models
+@using Graduation_API.Services.ClassServices;
+@{
+    ViewBag.Title = "Category";
+    Layout = "~/Views/Shared/_LayoutManagerment.cshtml";
+}
+<style>
+    label {
+        color: black;
+    }
+
+    h1 {
+        color: black;
+        font-weight: 500;
+    }
+</style>
+<h1>QUẢN LÍ DÒNG SẢN PHẨM</h1>
+@if (ViewBag.Message != null)
+{
+    <div class="alert alert-success" role="alert">
+        <h3>@ViewBag.Message</h3>
+    </div>
+}
+<form asp-action="CategoryCUPage" class="form">
+    <input asp-for="Id" style="width:0px;height:0px;visibility: hidden;" />
+    <div class="row mt-5">
+        <div class="col-md-5">
+            <label class="col-md-5"><strong>Mã Dòng Sản Phẩm:</strong></label>
+            <div class="form-input">
+                <span class="icon"><i class="fa fa-id-card"></i></span>
+                <input asp-for="Category_id" placeholder="Mã Loại Sản Phẩm / Category Id" required/>
+                <span asp-validation-for="Category_id" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-md-5">
+            <label class="col-md-5"><strong>Tên Loại Sản Phẩm:</strong></label>
+            <div class="form-input">
+                <span class="icon"><i class="fa-solid fa-signature"></i></span>
+                <input asp-for="Category_Name" placeholder="Tên loại sản Phẩm / Category name" required/>
+                <span asp-validation-for="Category_Name" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-md-5">
+            <label class="col-md-5"><strong>Mô tả:</strong></label>
+            <div class="form-input">
+                <span class="icon"><i class="fa-solid fa-signature"></i></span>
+                <input asp-for="Description" placeholder="Mô tả / Description" />
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div style="height:33px;"></div>
+            <div class="form-input">
+                <input type="submit" value="Lưu" class="btn btn-success" />
+            </div>
+        </div>
+    </div>
+</form>
+<table class="table table-striped table-bordered">
+    <thead>
+        <tr><th colspan="4" class="text-center" style="background-color:red; color:white;">DANH SÁCH LOẠI SẢN PHẨM</th></tr>
+        <tr style="background-color:red; color:white;">
+            <th>Mã Loại Sản Phẩm</th>
+            <th>Tên Loại Sản Phẩm</th>
+            <th>Mô tả</th>
+            <th>Chi tiết</th>
+        </tr>
+    </thead>
+    <tbody style="background-color:white;">
+        @foreach (var item in Model.Product_LineList)
+        {
+            <tr>
+                <td>
+                    @item.Category_Id
+                </td>
+                <td>
+                    @item.Category_Name
+                </td>
+                <td>
+                    @item.Description
+                </td>
+                <td>
+                    <button class="btn btn-info" onclick="location.href='@Url.Action("Detail", "Category",new { id = item.Id})'" />
+                    <img src="/images/ask_question_16px.png" alt="LOGO">
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<script>
+    var alert = document.querySelector('.alert')
+    if(alert != null){
+        setTimeout(function(){
+            alert.remove()
+        }, 3000)
+    }
+</script>

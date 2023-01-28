@@ -1,0 +1,145 @@
+﻿@model Motorcycle_Shop_Project.Models.EventDTO
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@using Motorcycle_Shop_Project.Models
+@using Graduation_API.Services.ClassServices;
+@{
+    ViewBag.Title = "Event- detail";
+    Layout = "~/Views/Shared/_LayoutManagerment.cshtml";
+}
+<style>
+    label{
+        color:black;
+    }
+    h1{
+        color:black;
+        font-weight:500;
+    }
+</style>
+<h1>QUẢN LÍ SỰ KIỆN</h1>
+<form asp-action="EventCUPage" class="form">
+    <input asp-for="Id" style="width:0px;height:0px;visibility: hidden;"/>
+    <div class="row mt-5">
+        <div class="col-md-4">
+            <label class="col-md-4"><strong>Tên Sự kiện:</strong></label>
+            <div class="form-input">
+                <span class="icon"><i class="fa-solid fa-signature"></i></span>
+                <input asp-for="Event_Name" placeholder="Tên Sự kiện / Employee Name" required/>
+                <span asp-validation-for="Event_Name" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <label class="col-md-4"><strong>Ngày bắt đầu:</strong></label>
+            <div class="form-input">
+                <span class="icon"><i class="fa-solid fa-calendar-days"></i></span>
+                <input asp-for="Start_Date" type="datetime-local"/>
+                <span asp-validation-for="Start_Date" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <label class="col-md-4"><strong>Ngày kết thúc:</strong></label>
+            <div class="form-input">
+                <span class="icon"><i class="fa-solid fa-calendar-days"></i></span>
+                <input asp-for="End_Date" type="datetime-local"/>
+                <span asp-validation-for="End_Date" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <label class="col-md-4"><strong>Mức giảm giá:</strong></label>
+            <div class="form-input">
+                <span class="icon"><i class="fa fa-phone" aria-hidden="true"></i></span>
+                <input asp-for="Discount_Rate" placeholder="Mức giảm giá / Discount rate" required/>
+                <span asp-validation-for="Discount_Rate" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <label class="col-md-4"><strong>Mô tả:</strong></label>
+            <div class="form-input">
+                <span class="icon"><i class="fa-solid fa-lock"></i></span>
+                <input asp-for="Description" type="text" placeholder="Mô tả / Description" required/>
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+        </div>
+        <br />
+        <div class="col-md-4">
+            <label class="col-md-3"><strong>Giảm giá theo:</strong></label>
+            <select asp-for="Discount_Unit" asp-items="@ViewBag.Discount_Unit" class="form-select" style="width:95px;">
+            </select>
+            <span asp-validation-for="Discount_Unit" class="text-danger"></span>
+
+            <label class="col-md-3"><strong>Trạng Thái:</strong></label>
+            <select asp-for="Status" asp-items="@ViewBag.Status" class="form-select" style="width:95px;">
+            </select>
+            <span asp-validation-for="Status" class="text-danger"></span>
+        </div>
+        <div class="col-md-4">
+            <input type="submit" value="Lưu" class="btn btn-success" />
+        </div>
+        
+    </div>
+</form>
+<table class="table table-striped table-bordered">
+    <thead>
+        <tr><th colspan="13" class="text-center" style="background-color:red; color:white;">DANH SÁCH SẢN PHẨM ĐƯỢC GIẢM GIÁ</th></tr>
+        <tr style="background-color:red; color:white;">
+            <th>Mã sự kiện</th>
+            <th>Tên sự kiện</th>
+            <th>Loại sản phẩm</th>
+            <th>Mã sản phẩm</th>
+            <th>Tên sản phẩm</th>
+            <th>Đơn vị giảm giá</th>
+            <th>Mức giảm giá</th>
+            <th>Giá ban đầu</th>
+            <th>Giá hiện tại</th>
+            <th>Bỏ</th>
+        </tr>
+    </thead>
+    <tbody style="background-color:white;">
+        @foreach (var item in @ViewBag.EventDetails.Event_Details_List) 
+        {
+            //-- Lấy thông tin sản phẩm chi tiết
+            Product_DetailService product_DetailService = new Product_DetailService();
+            var product_detail_info = product_DetailService.GetAll().Where(c=>c.Id == item.Product_Detail_Id).FirstOrDefault();
+
+            //-- Lấy thông tin sự kiện
+            EventService eventService = new EventService();
+            var event_info = eventService.GetAll().Where(c=>c.Id == item.Event_Id).FirstOrDefault();
+            
+            //-- Lấy thông tin sản phẩm
+            ProductService productService = new ProductService();
+            var product_info = productService.GetAll().Where(c=>c.Id == product_detail_info.Product_Id).FirstOrDefault();
+
+            //-- Lấy thông tin dòng sản phẩm
+            CategoryService product_LineService = new CategoryService();
+            var product_Line_info = product_LineService.GetAll().Where(c=>c.Id == product_detail_info.Category_Id).FirstOrDefault();
+
+            //-- Tính giá sau khi đượpc giảm
+            double price_when_reduced = 0;
+            if (event_info.Discount_Unit == 0)//theo %
+            {
+                //giá sau khi được giảm = giá hiện tại - (giá hiện tại * số % / 100)
+                price_when_reduced = Convert.ToDouble(product_detail_info.Price) - (Convert.ToDouble(product_detail_info.Price) * Convert.ToDouble(event_info.Discount_Rate) / 100);
+            }
+            else
+            {
+                //giá sau khi được giảm = giá hiện tại - số tiền được giảm
+                price_when_reduced = Convert.ToDouble(product_detail_info.Price) - Convert.ToDouble(event_info.Discount_Rate);
+            }
+
+            <tr>
+                <td> @event_info.Event_Id </td>
+                <td> @event_info.Event_Name </td>
+                <td> @product_Line_info.Category_Name </td>
+                <td> @product_info.Product_Id </td>
+                <td> @product_info.Product_Name </td>
+                <td> @event_info.Discount_Unit</td>
+                <td> @event_info.Discount_Rate</td>
+                <td> @(string.Format("{0:0,0} VNĐ", Convert.ToDouble(product_detail_info.Price)))</td>
+                <td> @(string.Format("{0:0,0} VNĐ", price_when_reduced))</td>
+                 <td>
+                    <button class="btn btn-danger" onclick="location.href='@Url.Action("RemoveEventDetail", "Event",new { id_product_dt = item.Product_Detail_Id,event_id = item.Event_Id})'" />
+                    <img src="/images/minus-sign-of-a-line-in-horizontal-position.png" alt="LOGO">
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

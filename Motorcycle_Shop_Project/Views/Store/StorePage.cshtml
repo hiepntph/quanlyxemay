@@ -1,0 +1,143 @@
+﻿@model Motorcycle_Shop_Project.Models.StoreDTO
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@using Motorcycle_Shop_Project.Models
+@using Graduation_API.Services.ClassServices;
+@{
+    ViewBag.Title = "Store";
+    Layout = "~/Views/Shared/_LayoutManagerment.cshtml";
+}
+<style>
+    label{
+        color:black;
+    }
+    h1{
+        color:black;
+        font-weight:500;
+    }
+</style>
+<h1>QUẢN LÍ CỬA HÀNG</h1>
+@if (ViewBag.Message != null)
+{
+    <div class="alert alert-success" role="alert">
+        <h3>@ViewBag.Message</h3>
+    </div>
+}
+<form asp-action="StoreCUPage" class="form">
+    <input asp-for="Id" style="width:0px;height:0px;visibility: hidden;"/>
+    <div class="row mt-5">
+        <div class="col-md-5">
+            <label class="col-md-5"><strong>Mã Cửa Hàng:</strong></label>
+            <div class="form-input">
+                <span class="icon"><i class="fa fa-id-card"></i></span>
+                <input asp-for="Store_Id" placeholder="Mã cửa hàng / Store Id" required/>
+                <span asp-validation-for="Store_Id" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-md-5">
+            <label class="col-md-5"><strong>Tên Cửa Hàng:</strong></label>
+            <div class="form-input">
+                <span class="icon"><i class="fa-solid fa-signature"></i></span>
+                <input asp-for="Store_Name" placeholder="Tên cửa hàng / Store Name" required/>
+                <span asp-validation-for="Store_Name" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <label class="col-md-5"><strong>Địa Chỉ:</strong></label>
+            <div class="form-input">
+                <span class="icon"><i class="fa-solid fa-map-location-dot"></i></span>
+                <input asp-for="Address" placeholder="Địa Chỉ / Address" required/>
+                <span asp-validation-for="Address" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <label class="col-md-7"><strong>Thành Phố:</strong></label>
+            <div class="form-input">
+                <span class="icon"><i class="fa-solid fa-city"></i></span>
+                <input asp-for="City" placeholder="Thành phố / City" required/>
+                <span asp-validation-for="City" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <label class="col-md-7"><strong>Quốc Gia:</strong></label>
+            <div class="form-input">
+                <span class="icon"><i class="fa-solid fa-earth-americas"></i></span>
+                <input asp-for="Country" placeholder="Quốc Gia / Country" required/>
+                <span asp-validation-for="Country" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <label class="col-md-7"><strong>Mô tả:</strong></label>
+            <div class="form-input">
+                <span class="icon"><i class="fa-solid fa-earth-americas"></i></span>
+                <input asp-for="Description" placeholder="Mô tả / Description"/>
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <label class="col-md-3">Trạng Thái:</label>
+            <select asp-for="Status" asp-items="@ViewBag.Status" class="form-select" style="width:95px;">
+            </select>
+            <span asp-validation-for="Status" class="text-danger"></span>
+        </div>
+        <div class="col-md-2">
+            <div class="form-input">
+                <input type="submit" value="Lưu" class="btn btn-success" />
+            </div>
+        </div>
+    </div>
+</form>
+
+<table class="table table-striped table-bordered">
+    <thead>
+        <tr><th colspan="9" class="text-center" style="background-color:red; color:white;">DANH SÁCH CỬA HÀNG</th></tr>
+        <tr style="background-color:red; color:white;">
+            <th>Mã Cửa Hàng</th>
+            <th>Tên Cửa Hàng</th>
+            <th>Địa Chỉ</th>
+            <th>Thành Phố</th>
+            <th>Quốc Gia</th>
+            <th>Mô tả</th>
+            <th>Trạng thái</th>
+            <th>Chi tiết</th>
+        </tr>
+    </thead>
+    <tbody style="background-color:white;">
+        @foreach (var item in Model.StoreList) {
+                <tr>
+                    <td>
+                        @item.Store_Id
+                    </td>
+                    <td>
+                        @item.Store_Name
+                    </td>
+                    <td>
+                        @item.Address
+                    </td>
+                    <td>
+                        @item.City
+                    </td>
+                    <td>
+                        @item.Country
+                    </td>
+                     <td>
+                        @item.Description
+                    </td>
+                     <td>
+                        @(item.Status == 0 ?"Không hoạt động":"Đang hoạt động")
+                    </td>
+                    <td>
+                        <button class="btn btn-info" onclick="location.href='@Url.Action("Detail", "Store",new { id = item.Id})'" />
+                        <img src="/images/ask_question_16px.png" alt="LOGO">
+                    </td>
+                </tr>
+        }
+    </tbody>
+</table>
+<script>
+    var alert = document.querySelector('.alert')
+    if(alert != null){
+        setTimeout(function(){
+            alert.remove()
+        }, 3000)
+    }
+</script>

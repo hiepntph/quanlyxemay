@@ -1,0 +1,146 @@
+﻿@model Motorcycle_Shop_Project.Models.EventDTO
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@using Motorcycle_Shop_Project.Models
+@using Graduation_API.Services.ClassServices;
+@{
+    ViewBag.Title = "Event";
+    Layout = "~/Views/Shared/_LayoutManagerment.cshtml";
+}
+<style>
+    label{
+        color:black;
+    }
+    h1{
+        color:black;
+        font-weight:500;
+    }
+</style>
+<h1>QUẢN LÍ SỰ KIỆN</h1>
+@if (ViewBag.Message != null)
+{
+    <div class="alert alert-success" role="alert">
+        <h3>@ViewBag.Message</h3>
+    </div>
+}
+<form asp-action="EventCUPage" class="form" enctype="multipart/form-data">
+    <input asp-for="Id" style="width:0px;height:0px;visibility: hidden;"/>
+    <div class="row mt-5">
+        <div class="col-md-4">
+            <label class="col-md-7"><strong>Tên Sự kiện:</strong></label>
+            <div class="form-input">
+                <span class="icon"><i class="fa-solid fa-signature"></i></span>
+                <input asp-for="Event_Name" placeholder="Tên Sự kiện / Employee Name" required/>
+                <span asp-validation-for="Event_Name" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <label class="col-md-7"><strong>Ngày bắt đầu:</strong></label>
+            <div class="form-input">
+                <span class="icon"><i class="fa-solid fa-calendar-days"></i></span>
+                <input asp-for="Start_Date" type="datetime-local"/>
+                <span asp-validation-for="Start_Date" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <label class="col-md-7"><strong>Ngày kết thúc:</strong></label>
+            <div class="form-input">
+                <span class="icon"><i class="fa-solid fa-calendar-days"></i></span>
+                <input asp-for="End_Date" type="datetime-local"/>
+                <span asp-validation-for="End_Date" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <label class="col-md-7"><strong>Mức giảm giá:</strong></label>
+            <div class="form-input">
+                <span class="icon"><i class="fa fa-phone" aria-hidden="true"></i></span>
+                <input asp-for="Discount_Rate" placeholder="Mức giảm giá / Discount rate" required/>
+                <span asp-validation-for="Discount_Rate" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <label class="col-md-7"><strong>Mô tả:</strong></label>
+            <div class="form-input">
+                <span class="icon"><i class="fa-solid fa-lock"></i></span>
+                <input asp-for="Description" type="text" placeholder="Mô tả / Description" required/>
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+        </div>
+        <br />
+        <div class="col-md-4">
+            <label class="col-md-5"><strong>Giảm giá theo:</strong></label>
+            <select asp-for="Discount_Unit" asp-items="@ViewBag.Discount_Unit" class="form-select">
+            </select>
+            <span asp-validation-for="Discount_Unit" class="text-danger"></span>
+
+            <label class="col-md-5"><strong>Trạng Thái:</strong></label>
+            <select asp-for="Status" asp-items="@ViewBag.Status" class="form-select">
+            </select>
+            <span asp-validation-for="Status" class="text-danger"></span>
+        </div>
+        <div class="col-md-4">
+            <label class="col-md-7"><strong>Hình Ảnh:</strong></label>
+            <div class="form-input">
+                <span class="icon"><i class="fa-solid fa-image"></i></span>
+                <input asp-for="Image_Upload" type="file" multiple/>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <input type="submit" value="Lưu" class="btn btn-success" />
+        </div>
+        
+    </div>
+</form>
+<table class="table table-striped table-bordered">
+    <thead>
+        <tr><th colspan="7" class="text-center" style="background-color:red; color:white;">DANH SÁCH SẢN PHẨM</th></tr>
+        <tr style="background-color:red; color:white;">
+            <th>Hình ảnh</th>
+            <th>Sản phẩm</th>
+            <th>Màu sắc</th>
+            <th>Loại sản phẩm</th>
+            <th>Số lượng trong kho</th>
+            <th>Giá bán</th>
+            <th>Thêm</th>
+        </tr>
+    </thead>
+    <tbody style="background-color:white;">
+        @foreach (var item in @ViewBag.Dataa.Product_DetailList) 
+        {
+            //-- Lấy tên nhà sản xuất để hiển thị
+            ProducerService producerService = new ProducerService();
+            string producer_Name = producerService.GetAll().Where(c=>c.Id == item.Producer_Id).Select(c => c.Producer_Name).FirstOrDefault();
+            
+            //-- Lấy tên sản phẩm để hiển thị
+            ProductService productService = new ProductService();
+            string product_name = productService.GetAll().Where(c=>c.Id == item.Product_Id).Select(c => c.Product_Name).FirstOrDefault();
+
+            //-- Lấy tên màu sắc để hiển thị
+            ColorService colorService = new ColorService();
+            string color_name = colorService.GetAll().Where(c=>c.Id == item.Color_Id).Select(c => c.Color_Name).FirstOrDefault();
+            
+            //-- Lấy tên nhà sản xuất để hiển thị
+            CategoryService product_LineService = new CategoryService();
+            string product_Line_name = product_LineService.GetAll().Where(c=>c.Id == item.Category_Id).Select(c => c.Category_Name).FirstOrDefault();
+            <tr>
+                <td> <img style="width:120px;height:50px;" src="~/images/@item.Image" /> </td>
+                <td> @product_name </td>
+                <td> @color_name </td>
+                <td> @product_Line_name </td>
+                <td> @item.Quantity_in_stock</td>
+                <td> @(string.Format("{0:0,0} VNĐ", Convert.ToDouble(item.Price)))</td>
+                <td>
+                    <button class="btn btn-success" onclick="location.href='@Url.Action("AddEventDetail", "Event",new { id = item.Id})'" />
+                    <img src="/images/plus.png" alt="LOGO">
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<script>
+    var alert = document.querySelector('.alert')
+    if(alert != null){
+        setTimeout(function(){
+            alert.remove()
+        }, 3000)
+    }
+</script>

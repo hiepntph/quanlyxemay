@@ -1,0 +1,72 @@
+﻿@model Tuple<List<Motorcycle_Shop_Project.Models.ProductViewModel>, List<EF_CODEFIRST_FLUENT_API.DomainClass.Category>>
+@{
+    ViewData["Title"] = "Product";
+    Layout = "~/Views/Shared/_LayoutManagerment.cshtml";
+}
+
+@if (Model != null)
+{
+    <div class="container fix-ctn">
+        <div class="breadscrumb">
+            <a class="parent" href="/">Sản phẩm</a>
+            <span class="img">❯</span>
+            <a class="current">Danh sách sản phẩm</a>
+        </div>
+        <div class="option d-none d-md-block">
+            <div class="row">
+                <div class="col-9">
+                    <a class="hide-product btn-outline-filter btn-option mr-4 btn-category btn-active select-category">TẤT CẢ</a>
+                    @foreach (var x in Model.Item2)
+                    {
+                        <a class="hide-product btn-outline-filter btn-option mr-4 select-category" id="@x.Id" onclick="location.href='@Url.Action("FilterByCategoryNameForInvoice", "Product",new { category_name = x.Category_Name})'">@x.Category_Name</a>
+                    }
+                </div>
+            </div>
+        </div>
+        <div class="homepage-product-head-right-mobile-v2">
+            <div class="hp-mobile-select-text">
+                <p>TẤT CẢ</p>
+                <div class="hp-mobile-select-item"><i class="fa fa-angle-down"></i></div>
+            </div>
+            <div class="hp-mobile-select-menu">
+                <p class="select-menu-item active">TẤT CẢ</p>
+                @foreach (var x in Model.Item2)
+                {
+                    <p class="select-menu-item">@x.Category_Name</p>
+                }
+            </div>
+        </div>
+
+        <div id="product-container" class="row product-list">
+            @foreach (var x in Model.Item1.Where(c => c.Product_Detail.Quantity_in_stock > 0))
+            {
+                <div class="homepage-product-slide-tab col-12 col-xl-3 col-lg-4 col-md-6 show">
+                    <div class="homepage-product-slide-tab-top">
+                        <div class="img-product">
+                            <div class="image-motor-product">
+                                <img src="~/images/@x.Product_Detail.Image" />
+                            </div>
+                        </div>
+                        <div class="category d-none">@x.Category.Id</div>
+                    </div>
+                    <div class="name-price-motor w-100">
+                        <p class="homepage-product-slide-tab-name w-100">@x.Product.Product_Name</p>
+                        <p class="homepage-product-slide-tab-price w-100 homepage-txt-price">
+                            Giá:
+                            @string.Format("{0:0,0}", @x.Product_Detail.Price) VNĐ
+                        </p>
+                    </div>
+                    <a href="/invoice/invoicepage/@x.Product_Detail.Id">
+                        <div class="homepage-product-slide-tab-detail d-flex align-items-center justify-content-center"
+                     style="cursor: pointer">
+                            Tạo hóa đơn
+                        </div>
+                        <div class="overlay-circle-hover">
+                        </div>
+                    </a>
+                </div>
+            }
+        </div>
+        <p class="empty-list ">Hiện tại chưa có sản phẩm bạn tìm kiếm</p>
+    </div>
+}

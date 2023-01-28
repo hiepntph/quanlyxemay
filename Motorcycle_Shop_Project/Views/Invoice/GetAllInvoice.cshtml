@@ -1,0 +1,85 @@
+﻿@model Motorcycle_Shop_Project.Models.InvoiceDTO
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@using Motorcycle_Shop_Project.Models
+@using Graduation_API.Services.ClassServices;
+@{
+    ViewBag.Title = "getallinvoice | invoice";
+    Layout = "~/Views/Shared/_LayoutManagerment.cshtml";
+}
+<style>
+    label{
+        color:black;
+    }
+    h1{
+        color:vlack;
+        font-weight:500;
+    }
+</style>
+<h1>HÓA ĐƠN</h1>
+<div class="row">
+    <div class="col-md-9">
+        <form asp-action="Search_invoice" class="form">
+            <div class="row mt-5">
+                <div class="col-md-5">
+                    <div class="form-input">
+                        <span class="icon"><i class="fa-solid fa-signature"></i></span>
+                        <input asp-for="Keyword" placeholder="Tìm kiếm / keyword" required/>
+                        <span asp-validation-for="Keyword" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-input">
+                        <input type="submit" value="Tìm kiếm" class="btn btn-success" />
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<table class="table table-striped table-bordered">
+    <thead>
+        <tr style="background-color:red; color:white;">
+            <th>Mã hóa đơn</th>
+            <th>Mã nhân viên</th>
+            <th>Tên nhân viên</th>
+            <th>Tên sản phẩm</th>
+            <th>Tên khách hàng</th>
+            <th>Số điện thoại</th>
+            <th>Địa chỉ</th>
+            <th>Giá</th>
+            <th>Tổng tiền</th>
+            <th>Đã thanh toán</th>
+            <th>Trạng thái</th>
+        </tr>
+    </thead>
+    <tbody style="background-color:white;">
+        @foreach (var item in @ViewBag.Dataa) 
+        {
+            Product_DetailService productDeatail_Service = new Product_DetailService();
+            var productdt = productDeatail_Service.GetAll().Where(c=>c.Id == item.Invoice_Detail.Product_Detail_Id).FirstOrDefault();
+
+            ProductService productService = new ProductService();
+            var product = productService.GetAll().Where(c=>c.Id == productdt.Product_Id).FirstOrDefault();
+            
+            InvoiceService invoiceService = new InvoiceService();
+            var invoice = invoiceService.GetAll().Where(c=>c.Id == item.Invoice.Id).FirstOrDefault();
+
+            EmployeeService employeeService = new EmployeeService();
+            var employee = employeeService.GetAll().Where(c=>c.Id == item.Invoice.Employee_Id).FirstOrDefault();
+            <tr>
+                <td> @invoice.Invoice_Id </td>
+                <td> @employee.Employee_Id </td>
+                <td> @employee.Employee_Name </td>
+                <td> @product.Product_Name </td>
+                <td> @item.Invoice.Customer_Name </td>
+                <td> @item.Invoice.Phone_Number </td>
+                <td> @item.Invoice.Address </td>
+                <td> @string.Format("{0:0,0} VNĐ", Convert.ToDouble(@item.Invoice_Detail.Price)) </td>
+                <td> @string.Format("{0:0,0} VNĐ", Convert.ToDouble(@item.Invoice.Total_Money)) </td>
+                <td> @string.Format("{0:0,0} VNĐ", Convert.ToDouble(@item.Invoice.Amound_Paid)) </td>
+                <td> @(item.Invoice.Status == 0 ?"Đã thanh toán" : item.Invoice.Status == 1 ? "Chưa thanh toán" : "Thanh toán chưa đủ")</td>
+            </tr>
+        }
+    </tbody>
+</table>

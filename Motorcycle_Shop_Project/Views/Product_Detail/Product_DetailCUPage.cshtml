@@ -1,0 +1,205 @@
+﻿@model Motorcycle_Shop_Project.Models.Product_DetailDTO
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@using Motorcycle_Shop_Project.Models
+@using Graduation_API.Services.ClassServices;
+@{
+    ViewBag.Title = "ProductDetail";
+    Layout = "~/Views/Shared/_LayoutManagerment.cshtml";
+}
+<style>
+    label{
+        color:black;
+    }
+    h1{
+        color:black;
+        font-weight:500;
+    }
+</style>
+<h1>QUẢN LÍ CHI TIẾT SẢN PHẨM</h1>
+@if (ViewBag.Message != null)
+{
+    <div class="alert alert-danger" role="alert">
+        <h3>@ViewBag.Message</h3>
+    </div>
+}
+<form asp-action="Product_DetailCUPage" class="form" enctype="multipart/form-data">
+    <input asp-for="Id" style="width:0px;height:0px;visibility: hidden;"/>
+    <div class="row mt-5">
+        <div class="form-group col-md-6">
+            <label class="col-md-4">Sản Phẩm:</label>
+            <select asp-for="Product_Id" asp-items="@ViewBag.IdProduct" class="form-select col-md-5">
+            </select>
+            <span asp-validation-for="Product_Id" class="text-danger"></span>
+        </div>
+        <div class="form-group col-md-6">
+            <label class="col-md-5">Nhà Sản Xuất:</label>
+            <select asp-for="Producer_Id" asp-items="@ViewBag.IdProducer" class="form-select col-md-5">
+            </select>
+            <span asp-validation-for="Producer_Id" class="text-danger"></span>
+        </div>
+        <div class="form-group col-md-6">
+            <label class="col-md-4">Màu Sắc:</label>
+            <select asp-for="Color_Id" asp-items="@ViewBag.IdColor" class="form-select col-md-5">
+            </select>
+            <span asp-validation-for="Color_Id" class="text-danger"></span>
+        </div>
+        <div class="form-group col-md-6">
+            <label class="col-md-5">Loại Sản Phẩm:</label>
+            <select asp-for="Category_Id" asp-items="@ViewBag.IdProduct_Line" class="form-select col-md-5">
+            </select>
+            <span asp-validation-for="Category_Id" class="text-danger"></span>
+        </div>
+         <div class="col-md-4">
+            <label class="col-md-7"><strong>Ngày Sản xuất:</strong></label>
+            <div class="form-input">
+                <span class="icon"><i class="fa-solid fa-calendar-days"></i></span>
+                <input asp-for="Date_Of_Manufacture" type="datetime-local"/>
+                <span asp-validation-for="Date_Of_Manufacture" class="text-danger"></span>
+            </div>
+        </div>
+         <div class="col-md-4">
+            <label class="col-md-7"><strong>Hạn sử dụng:</strong></label>
+            <div class="form-input">
+                <span class="icon"><i class="fa-solid fa-calendar-days"></i></span>
+                <input asp-for="Expiry" type="datetime-local"/>
+                <span asp-validation-for="Expiry" class="text-danger"></span>
+            </div>
+        </div>
+         <div class="col-md-4">
+            <label class="col-md-7"><strong>Ngày nhập kho:</strong></label>
+            <div class="form-input">
+                <span class="icon"><i class="fa-solid fa-calendar-days"></i></span>
+                <input asp-for="Date_Of_entry" type="datetime-local"/>
+                <span asp-validation-for="Date_Of_entry" class="text-danger"></span>
+            </div>
+        </div>
+         <div class="col-md-4">
+            <label class="col-md-7"><strong>Ngày Xuất kho:</strong></label>
+            <div class="form-input">
+                <span class="icon"><i class="fa-solid fa-calendar-days"></i></span>
+                <input asp-for="Date_Of_inventory" type="datetime-local"/>
+                <span asp-validation-for="Date_Of_inventory" class="text-danger"></span>
+            </div>
+        </div>
+         <div class="col-md-4">
+            <label class="col-md-6"><strong>Số Lượng Còn lại:</strong></label>
+            <div class="form-input">
+                <span class="icon"><i class="fa-solid fa-list-ol"></i></span>
+                <input asp-for="Quantity_in_stock" placeholder="Số lượng tồn kho / Quantity instock" required/>
+                <span asp-validation-for="Quantity_in_stock" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <label class="col-md-7"><strong>Giá Nhập:</strong></label>
+            <div class="form-input">
+                <span class="icon"><i class="fa-solid fa-money-bill-wave"></i></span>
+                <input asp-for="Import_Price" placeholder="Giá nhập / Import price" required/>
+                <span asp-validation-for="Import_Price" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <label class="col-md-7"><strong>Giá Bán:</strong></label>
+            <div class="form-input">
+                <span class="icon"><i class="fa-solid fa-money-bill-wave"></i></span>
+                <input asp-for="Price" placeholder="Giá bán / Price" required/>
+                <span asp-validation-for="Price" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <label class="col-md-7"><strong>Số tháng bảo hành:</strong></label>
+            <div class="form-input">
+                <span class="icon"><i class="fa-solid fa-prescription"></i></span>
+                <input asp-for="Month_Warranty" placeholder="Số tháng bảo hành / Month Warranty" required/>
+                <span asp-validation-for="Month_Warranty" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <label class="col-md-7"><strong>Nguồn gốc xuất sứ:</strong></label>
+            <div class="form-input">
+                <span class="icon"><i class="fa-solid fa-prescription"></i></span>
+                <input asp-for="Origin" placeholder="Nguồn gốc xuất sứ / Origin" required/>
+                <span asp-validation-for="Origin" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <label class="col-md-7"><strong>Mô tả:</strong></label>
+            <div class="form-input">
+                <span class="icon"><i class="fa-solid fa-prescription"></i></span>
+                <input asp-for="Description" placeholder="Mô tả / Description" />
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <label class="col-md-7"><strong>Hình Ảnh:</strong></label>
+            <div class="form-input">
+                <span class="icon"><i class="fa-solid fa-image"></i></span>
+                <input asp-for="Image_Upload" type="file" multiple/>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <input type="submit" value="Lưu" class="btn btn-success" />
+        </div>
+    </div>
+</form>
+<table class="table table-striped table-bordered">
+    <thead>
+        <tr><th colspan="11" class="text-center" style="background-color:red; color:white;">DANH SÁCH SẢN PHẨM CHI TIẾT</th></tr>
+        <tr style="background-color:red; color:white;">
+            <th>Hình Ảnh</th>
+            <th>Sản phẩm</th>
+            <th>Nhà sản xuất</th>
+            <th>Màu sắc</th>
+            <th>Loại sản phẩm</th>
+            <th>Ngày sản xuất</th>
+            <th>Hạn sử dụng</th>
+            <th>Số lượng còn lại</th>
+            <th>Giá nhập</th>
+            <th>Giá bán</th>
+            <th>Chi tiết</th>
+        </tr>
+    </thead>
+    <tbody style="background-color:white;">
+        @foreach (var item in Model.Product_DetailList) 
+        {
+            //-- Lấy tên nhà sản xuất để hiển thị
+            ProducerService producerService = new ProducerService();
+            string producer_Name = producerService.GetAll().Where(c=>c.Id == item.Producer_Id).Select(c => c.Producer_Name).FirstOrDefault();
+            
+            //-- Lấy tên sản phẩm để hiển thị
+            ProductService productService = new ProductService();
+            string product_name = productService.GetAll().Where(c=>c.Id == item.Product_Id).Select(c => c.Product_Name).FirstOrDefault();
+
+            //-- Lấy tên màu sắc để hiển thị
+            ColorService colorService = new ColorService();
+            string color_name = colorService.GetAll().Where(c=>c.Id == item.Color_Id).Select(c => c.Color_Name).FirstOrDefault();
+            
+            //-- Lấy tên nhà sản xuất để hiển thị
+            CategoryService product_LineService = new CategoryService();
+            string product_Line_name = product_LineService.GetAll().Where(c=>c.Id == item.Category_Id).Select(c => c.Category_Name).FirstOrDefault();
+            <tr>
+                <td><img style="width:120px;height:50px;" src="~/images/@item.Image" /> </td>
+                <td> @product_name </td>
+                <td> @producer_Name </td>
+                <td> @color_name </td>
+                <td> @product_Line_name </td>
+                <td> @item.Date_Of_Manufacture </td>
+                <td> @item.Expiry </td>
+                <td> @item.Quantity_in_stock</td>
+                <td> @item.Import_Price </td>
+                <td> @item.Price</td>
+                <td>
+                    <button class="btn btn-info" onclick="location.href='@Url.Action("Detail", "Product_Detail",new { id = item.Id})'" />
+                    <img src="/images/ask_question_16px.png" alt="LOGO">
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<script>
+    var alert = document.querySelector('.alert')
+    if(alert != null){
+        setTimeout(function(){
+            alert.remove()
+        }, 3000)
+    }
+</script>
